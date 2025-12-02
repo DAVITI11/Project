@@ -16,13 +16,13 @@
 
     <Space android:layout_width="match_parent" android:layout_height="100dp"></Space>
 
-    <EditText android:id="@+id/firstname" android:layout_width="match_parent" android:layout_height="50dp" android:hint="FirstName" android:singleLine="true"></EditText>
+    <EditText android:id="@+id/Firstname" android:layout_width="match_parent" android:layout_height="50dp" android:hint="FirstName" android:singleLine="true"></EditText>
 
-    <EditText android:id="@+id/lastname" android:layout_width="match_parent" android:layout_height="50dp" android:hint="LastName" android:singleLine="true"></EditText>
+    <EditText android:id="@+id/Lastname" android:layout_width="match_parent" android:layout_height="50dp" android:hint="LastName" android:singleLine="true"></EditText>
 
-    <EditText android:id="@+id/email" android:layout_width="match_parent" android:layout_height="50dp" android:hint="Email" android:singleLine="true" android:inputType="textEmailAddress"></EditText>
+    <EditText android:id="@+id/Email" android:layout_width="match_parent" android:layout_height="50dp" android:hint="Email" android:singleLine="true" android:inputType="textEmailAddress"></EditText>
 
-    <EditText android:id="@+id/number" android:layout_width="match_parent" android:layout_height="50dp" android:hint="Number" android:singleLine="true" android:inputType="phone"></EditText>
+    <EditText android:id="@+id/Number" android:layout_width="match_parent" android:layout_height="50dp" android:hint="Number" android:singleLine="true" android:inputType="phone"></EditText>
 
     <Space android:layout_width="match_parent" android:layout_height="20dp"></Space>
 
@@ -30,6 +30,6 @@
 
     <Space android:layout_width="match_parent" android:layout_height="20dp"></Space>
 
-    <Button android:id="@+id/GoToLoginLayout" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Go To Login Page" android:textSize="30dp"></Button>
+    <Button android:id="@+id/GoToLoginlayout" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Go To Login Page" android:textSize="30dp"></Button>
 
 </LinearLayout>
