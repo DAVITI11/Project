@@ -13,7 +13,7 @@ import java.io.InputStream;
 
 public class DateBaseHelper extends SQLiteOpenHelper {
 
-    private static final String DATABASE_NAME = "Users.db";
+    private static final String DATABASE_NAME = "ProjectBase.db";
     private static final int DATABASE_VERSION = 1;
     private final Context context;
     private String databasePath;
@@ -65,7 +65,7 @@ public class DateBaseHelper extends SQLiteOpenHelper {
     public boolean CheckUser(String us, String pass) {
         SQLiteDatabase db = openDatabase();
         Cursor cursor = db.rawQuery(
-                "SELECT * FROM Users WHERE user = us  AND password = pass",
+                "SELECT * FROM Users WHERE User = ?  AND Password = ?",
                 new String[]{us, pass}
         );
 
