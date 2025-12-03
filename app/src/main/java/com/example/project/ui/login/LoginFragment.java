@@ -21,6 +21,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.project.DateBaseHelper;
 import com.example.project.MainActivity;
 import com.example.project.Register;
 import com.example.project.databinding.FragmentLoginBinding;
@@ -52,7 +53,19 @@ public class LoginFragment extends Fragment {
         registerButton = view.findViewById(R.id.registerButton);
 
         loginButton.setOnClickListener(v->{
-            Toast.makeText(getContext(), "Login Button Clicked", Toast.LENGTH_SHORT).show();
+            String user = username.getText().toString();
+            String pass = password.getText().toString();
+            if(!user.isEmpty() && !pass.isEmpty()){
+
+                DateBaseHelper dbHelper = new DateBaseHelper(this.getContext());
+
+                if (dbHelper.CheckUser(user,pass)) {
+                    Toast.makeText(getContext(), "User exists!", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getContext(), "User NOT found!", Toast.LENGTH_SHORT).show();
+                }
+            }
+
         });
         registerButton.setOnClickListener(v->{
             Toast.makeText(getContext(), "Register Button Clicked", Toast.LENGTH_SHORT).show();
