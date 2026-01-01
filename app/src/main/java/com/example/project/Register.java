@@ -14,18 +14,13 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.project.ui.login.LoginFragment;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 public class Register extends Fragment {
 
-    Button registerButton;
-    Button GoToLoginLayout;
-    EditText username;
-    EditText password;
-    EditText firstname;
-    EditText lastname;
-    EditText email;
-    EditText number;
-
+    Button registerButton,GoToLoginLayout;
+    EditText username,password,firstname,lastname,email,number;
+    DataBaseHelper dbHelper;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -46,12 +41,30 @@ public class Register extends Fragment {
         number = view.findViewById(R.id.Number);
 
         registerButton.setOnClickListener(v -> {
-            Toast.makeText(getContext(), "Register Button Clicked", Toast.LENGTH_SHORT).show();
+            String user = username.getText().toString();
+            String pass = password.getText().toString();
+            String first = firstname.getText().toString();
+            String last = lastname.getText().toString();
+            String mail = email.getText().toString();
+            String num = number.getText().toString();
+            if(!user.isEmpty() && !pass.isEmpty() && !first.isEmpty() && !last.isEmpty() && !mail.isEmpty() && !num.isEmpty()){
+                  dbHelper = new DataBaseHelper(getContext());
+          //      dbHelper.RegisterNewUser(user, pass, first, last, mail, num);
+                Toast.makeText(getContext(), "User Registered!", Toast.LENGTH_SHORT).show();
+            }else{
+                Toast.makeText(getContext(), "Please fill all fields", Toast.LENGTH_SHORT).show();
+            }
         });
 
         GoToLoginLayout.setOnClickListener(v -> {
-            Toast.makeText(getContext(), "Go To Login Layout Clicked", Toast.LENGTH_SHORT).show();
-            ((MainActivity) getActivity()).ChangeFragment(new LoginFragment());
+            new MaterialAlertDialogBuilder(getContext())
+                    .setTitle("⚠\uFE0F")
+                    .setMessage("Are you sure you want to go to login layout?")
+                    .setPositiveButton("Yes", (dialog, which) -> {
+                        ((MainActivity) getActivity()).ChangeFragment(new LoginFragment());
+                    }).setNegativeButton("No",(dialog, which) ->{
+                        dialog.dismiss();
+                    } ).show();
         });
     }
 }
