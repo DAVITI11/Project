@@ -3,7 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-
     <Space android:layout_width="match_parent" android:layout_height="200dp"></Space>
 
     <EditText android:id="@+id/username" android:layout_width="match_parent" android:layout_height="50dp" android:hint="Username" android:singleLine="true"></EditText>

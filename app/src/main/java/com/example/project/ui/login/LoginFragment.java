@@ -26,8 +26,7 @@ public class LoginFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_login, container, false);
-        return view;
+        return inflater.inflate(R.layout.fragment_login, container, false);
     }
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -36,7 +35,6 @@ public class LoginFragment extends Fragment {
         password = view.findViewById(R.id.password);
         loginButton = view.findViewById(R.id.loginButton);
         registerButton = view.findViewById(R.id.registerButton);
-
         loginButton.setOnClickListener(v->{
             String user = username.getText().toString();
             String pass = password.getText().toString();
@@ -55,8 +53,5 @@ public class LoginFragment extends Fragment {
         registerButton.setOnClickListener(v->{
             ((MainActivity)getActivity()).ChangeFragment(new Register());
         });
-
-
-
     }
 }

@@ -21,15 +21,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
-
         cont = findViewById(R.id.cont);
-
-
             FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.cont, new LoginFragment()).commit();
-
     }
-
     public void ChangeFragment(Fragment fm){
         getSupportFragmentManager().beginTransaction().replace(R.id.cont, fm).commit();
     }

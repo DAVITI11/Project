@@ -48,14 +48,15 @@ public class Register extends Fragment {
             String mail = email.getText().toString();
             String num = number.getText().toString();
             if(!user.isEmpty() && !pass.isEmpty() && !first.isEmpty() && !last.isEmpty() && !mail.isEmpty() && !num.isEmpty()){
-                  dbHelper = new DataBaseHelper(getContext());
-          //      dbHelper.RegisterNewUser(user, pass, first, last, mail, num);
+                dbHelper = new DataBaseHelper(getContext());
+                dbHelper.AddNewUser(first, last, mail, num);
+                dbHelper.AddUser(user, pass);
                 Toast.makeText(getContext(), "User Registered!", Toast.LENGTH_SHORT).show();
             }else{
                 Toast.makeText(getContext(), "Please fill all fields", Toast.LENGTH_SHORT).show();
             }
+//            Toast.makeText(getContext(), "djndj", Toast.LENGTH_SHORT).show();
         });
-
         GoToLoginLayout.setOnClickListener(v -> {
             new MaterialAlertDialogBuilder(getContext())
                     .setTitle("⚠\uFE0F")
