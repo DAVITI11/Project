@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment;
 
 
 public class MainActivity extends AppCompatActivity {
-
     FrameLayout cont;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,6 +16,7 @@ public class MainActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
         cont = findViewById(R.id.cont);
+        ChangeFragment(new LoginFrm());
     }
     public void ChangeFragment(Fragment fm){
         getSupportFragmentManager().beginTransaction().replace(R.id.cont, fm).commit();
