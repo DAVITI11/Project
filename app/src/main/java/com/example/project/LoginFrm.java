@@ -15,7 +15,7 @@ import androidx.fragment.app.Fragment;
 public class LoginFrm extends Fragment {
 
     EditText UserName, Password;
-    Button LoginBtn;
+    Button LoginBtn,RegBtn;
     String userName, password;
 
     @Nullable
@@ -23,14 +23,16 @@ public class LoginFrm extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.loginlyt, container, false);
     }
-
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        UserName = view.findViewById(R.id.etUsername);
-        Password = view.findViewById(R.id.etPassword);
+        UserName = view.findViewById(R.id.Username);
+        Password = view.findViewById(R.id.Password);
         LoginBtn = view.findViewById(R.id.btnLogin);
-
+        RegBtn = view.findViewById(R.id.RegBtn);
+        RegBtn.setOnClickListener(v->{
+            ((MainActivity)getActivity()).ChangeFragment(new RegistrationFrgm());
+        });
         LoginBtn.setOnClickListener(v->{
             userName = UserName.getText().toString();
             password = Password.getText().toString();
@@ -40,7 +42,5 @@ public class LoginFrm extends Fragment {
                 Toast.makeText(getContext(), "Enter User Name and Password", Toast.LENGTH_SHORT).show();
             }
         });
-
-
     }
 }

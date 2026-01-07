@@ -13,10 +13,9 @@
         android:layout_height="wrap_content"
         android:hint="Username">
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/etUsername"
+            android:id="@+id/Username"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textPersonName"/>
+            android:layout_height="wrap_content" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -26,10 +25,9 @@
         android:hint="Password"
         app:endIconMode="password_toggle">
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/etPassword"
+            android:id="@+id/Password"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textPassword"/>
+            android:layout_height="wrap_content" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.button.MaterialButton
@@ -37,6 +35,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Login"
-        android:layout_marginTop="20dp"
-        app:cornerRadius="12dp"/>
+        android:layout_marginTop="10dp"
+        />
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/RegBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="Registration"></com.google.android.material.button.MaterialButton>
 </LinearLayout>
