@@ -31,7 +31,7 @@ public class LoginFrm extends Fragment {
         LoginBtn = view.findViewById(R.id.btnLogin);
         RegBtn = view.findViewById(R.id.RegBtn);
         RegBtn.setOnClickListener(v->{
-            ((MainActivity)getActivity()).ChangeFragment(new RegistrationFrgm());
+            ((MainActivity)getActivity()).ChangeFragment(new ClientFrmg());
         });
         LoginBtn.setOnClickListener(v->{
             userName = UserName.getText().toString();
