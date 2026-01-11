@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -27,12 +28,14 @@ public class RegistrationFrgm extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view,savedInstanceState);
+
         UserNm = view.findViewById(R.id.UserNm);
         Pass = view.findViewById(R.id.Pass);
         eml = view.findViewById(R.id.email);
         adrs = view.findViewById(R.id.address);
         Reg = view.findViewById(R.id.RegBtn);
         GotoLogin = view.findViewById(R.id.GotoLogin);
+
         GotoLogin.setOnClickListener(v->{
             new MaterialAlertDialogBuilder(requireContext())
                     .setTitle("Go Back Login")
@@ -43,5 +46,18 @@ public class RegistrationFrgm extends Fragment {
                     .setNegativeButton("No", null)
                     .show();
         });
+
+        Reg.setOnClickListener(v->{
+            userName = UserNm.getText().toString();
+            password = Pass.getText().toString();
+            email = eml.getText().toString();
+            address = adrs.getText().toString();
+            if(!userName.isEmpty() && !password.isEmpty() && !email.isEmpty() && !address.isEmpty()){
+                Toast.makeText(requireContext(), "Registration Successful", Toast.LENGTH_SHORT).show();
+            }else{
+                Toast.makeText(requireContext(), "Enter All Fields", Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 }
