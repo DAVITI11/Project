@@ -11,6 +11,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+
 
 public class RegistrationFrgm extends Fragment {
     Button Reg,GotoLogin;
@@ -32,7 +34,14 @@ public class RegistrationFrgm extends Fragment {
         Reg = view.findViewById(R.id.RegBtn);
         GotoLogin = view.findViewById(R.id.GotoLogin);
         GotoLogin.setOnClickListener(v->{
-            ((MainActivity)getActivity()).ChangeFragment(new LoginFrm());
+            new MaterialAlertDialogBuilder(requireContext())
+                    .setTitle("Go Back Login")
+                    .setMessage("Are you sure you want to go back to login")
+                    .setPositiveButton(("Yes"), (dialog, which) -> {
+                        ((MainActivity)getActivity()).ChangeFragment(new LoginFrm());
+                    })
+                    .setNegativeButton("No", null)
+                    .show();
         });
     }
 }

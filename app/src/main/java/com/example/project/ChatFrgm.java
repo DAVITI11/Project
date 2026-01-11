@@ -46,7 +46,12 @@ public class ChatFrgm extends Fragment {
         lstv.setAdapter(adpt);
 
         GoBack.setOnClickListener(v->{
-            ((MainActivity)getActivity()).ChangeFragment(new OwnerFrmg());
+            new MaterialAlertDialogBuilder(requireContext())
+                    .setTitle("Exit Chat")
+                    .setMessage("Are you sure you want to exit chat?")
+                    .setPositiveButton("Yes", (dialog, which) -> {
+                        ((MainActivity)getActivity()).ChangeFragment(new OwnerFrmg());
+                    }).setNegativeButton("No", null).show();
         });
 
         ImBt.setOnClickListener(v->{
