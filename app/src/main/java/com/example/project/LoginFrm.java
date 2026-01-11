@@ -31,13 +31,13 @@ public class LoginFrm extends Fragment {
         LoginBtn = view.findViewById(R.id.btnLogin);
         RegBtn = view.findViewById(R.id.RegBtn);
         RegBtn.setOnClickListener(v->{
-            ((MainActivity)getActivity()).ChangeFragment(new ClientFrmg());
+            ((MainActivity)getActivity()).ChangeFragment(new RegistrationFrgm());
         });
         LoginBtn.setOnClickListener(v->{
             userName = UserName.getText().toString();
             password = Password.getText().toString();
             if(userName.equals("Admin") && password.equals("Admin")) {
-                Toast.makeText(getContext(), "Enter Success", Toast.LENGTH_SHORT).show();
+                ((MainActivity) getActivity()).ChangeFragment(new OwnerFrmg());
             }else{
                 Toast.makeText(getContext(), "Enter User Name and Password", Toast.LENGTH_SHORT).show();
             }

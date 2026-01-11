@@ -1,0 +1,68 @@
+<LinearLayout android:id="@+id/rootLayout"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+        <Button
+            android:id="@+id/GoBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Back"></Button>
+        <Space
+            android:layout_width="20dp"
+            android:layout_height="match_parent"></Space>
+        <TextView
+            android:id="@+id/HeadTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:text="dddddddddddddd"></TextView>
+    </LinearLayout>
+    <ListView
+        android:id="@+id/listView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:divider="@null"
+        android:stackFromBottom="true"
+        android:transcriptMode="alwaysScroll"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="6dp">
+
+        <EditText
+            android:id="@+id/etMessage"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:minHeight="40dp"
+            android:maxHeight="120dp"
+            android:hint="Type a message..."
+            android:padding="10dp"
+            android:inputType="textMultiLine"
+            android:gravity="top|start"
+            android:scrollHorizontally="false"/>
+
+        <ImageButton
+            android:id="@+id/btnSend"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="6dp"
+            android:src="@android:drawable/ic_menu_send"
+            android:background="@android:color/transparent"
+            android:contentDescription="Send"
+            android:enabled="false"
+            android:alpha="0.5"/>
+    </LinearLayout>
+
+</LinearLayout>
