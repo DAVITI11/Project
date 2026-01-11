@@ -9,8 +9,8 @@ import android.widget.TextView;
 import java.util.List;
 
 public class ChatAdpt extends BaseAdapter {
-    private Context context;
-    private List<Message> message;
+    private final Context context;
+    private final List<Message> message;
     public ChatAdpt(Context context, List<Message> message) {
         this.context = context;
         this.message = message;

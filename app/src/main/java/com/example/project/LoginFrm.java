@@ -26,13 +26,16 @@ public class LoginFrm extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         UserName = view.findViewById(R.id.Username);
         Password = view.findViewById(R.id.Password);
         LoginBtn = view.findViewById(R.id.btnLogin);
         RegBtn = view.findViewById(R.id.RegBtn);
+
         RegBtn.setOnClickListener(v->{
             ((MainActivity)getActivity()).ChangeFragment(new RegistrationFrgm());
         });
+
         LoginBtn.setOnClickListener(v->{
             userName = UserName.getText().toString();
             password = Password.getText().toString();

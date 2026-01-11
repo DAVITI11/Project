@@ -39,7 +39,6 @@ public class ChatFrgm extends Fragment {
         ImBt = view.findViewById(R.id.btnSend);
         GoBack = view.findViewById(R.id.GoBack);
 
-        //GoBack.setNavigationOnClickListener(v -> finish());
 
         lst = new ArrayList<>();
         adpt = new ChatAdpt(requireContext(), lst);
