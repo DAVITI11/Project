@@ -1,6 +1,11 @@
 plugins {
     alias(libs.plugins.android.application)
 }
+android {
+    defaultConfig {
+        vectorDrawables.useSupportLibrary = true
+    }
+}
 
 android {
     namespace 'com.example.project'

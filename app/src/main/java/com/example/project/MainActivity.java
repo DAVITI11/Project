@@ -32,8 +32,9 @@ public class MainActivity extends AppCompatActivity {
 
         cont = findViewById(R.id.cont);
         NamePass = new ArrayList<>();
-        loadUsersFromServer();
-        ChangeFragment(new LoginFrm());
+      //  loadUsersFromServer();
+        // ChangeFragment(new LoginFrm());
+        ChangeFragment(new ClientFrmg());
     }
 
     public void ChangeFragment(Fragment fm) {
