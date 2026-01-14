@@ -70,6 +70,7 @@ public class ClientFrmg extends Fragment {
             }
 
             if (itemId == R.id.nav_sell) {
+                ((MainActivity)getActivity()).ChangeFragment(new Fragment_Sell());
                 Toast.makeText(getContext(), "Sell clicked", Toast.LENGTH_SHORT).show();
                 return true;
             }

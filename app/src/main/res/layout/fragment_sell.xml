@@ -1,25 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
+    <!-- TOP BAR -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="#FFA500"
-        android:orientation="horizontal"
-        android:gravity="center_vertical">
+        android:gravity="center_vertical"
+        android:paddingStart="10dp">
 
         <ImageView
             android:id="@+id/btnHomeTop"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:padding="8dp"
-            android:layout_marginLeft="10dp"
-            android:src="@drawable/ic_home"
-            android:contentDescription="Home" />
+            app:srcCompat="@drawable/ic_home" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -28,25 +27,36 @@
             android:textColor="#FFFFFF"
             android:textSize="22sp"
             android:gravity="center_vertical"
-            android:layout_marginLeft="15dp"/>
+            android:layout_marginStart="15dp"/>
     </LinearLayout>
 
+    <!-- MAIN CONTENT -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:orientation="vertical"
-        android:padding="15dp"
-        >
+        android:padding="15dp">
 
+        <!-- Car Image -->
+        <ImageView
+            android:id="@+id/carImage"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:background="#DDDDDD"
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/ic_add_photo"/>
 
+        <Space android:layout_width="match_parent" android:layout_height="20dp"/>
+
+        <!-- Model -->
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:boxBackgroundMode="outline"
             app:boxCornerRadiusTopStart="10dp"
-            app:boxCornerRadiusTopEnd="10dp"
             app:boxCornerRadiusBottomStart="10dp"
+            app:boxCornerRadiusTopEnd="10dp"
             app:boxCornerRadiusBottomEnd="10dp">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -55,14 +65,25 @@
                 android:hint="Model"/>
         </com.google.android.material.textfield.TextInputLayout>
 
+        <Space android:layout_width="match_parent" android:layout_height="20dp"/>
 
+        <Spinner
+            android:id="@+id/spinnerCars"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:spinnerMode="dropdown"/>
+
+
+        <Space android:layout_width="match_parent" android:layout_height="20dp"/>
+
+        <!-- Year -->
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:boxBackgroundMode="outline"
             app:boxCornerRadiusTopStart="10dp"
-            app:boxCornerRadiusTopEnd="10dp"
             app:boxCornerRadiusBottomStart="10dp"
+            app:boxCornerRadiusTopEnd="10dp"
             app:boxCornerRadiusBottomEnd="10dp">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -72,14 +93,16 @@
                 android:hint="Year"/>
         </com.google.android.material.textfield.TextInputLayout>
 
+        <Space android:layout_width="match_parent" android:layout_height="20dp"/>
 
+        <!-- Price -->
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:boxBackgroundMode="outline"
             app:boxCornerRadiusTopStart="10dp"
-            app:boxCornerRadiusTopEnd="10dp"
             app:boxCornerRadiusBottomStart="10dp"
+            app:boxCornerRadiusTopEnd="10dp"
             app:boxCornerRadiusBottomEnd="10dp">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -88,13 +111,16 @@
                 android:hint="Price"/>
         </com.google.android.material.textfield.TextInputLayout>
 
+        <Space android:layout_width="match_parent" android:layout_height="20dp"/>
+
+        <!-- Description -->
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:boxBackgroundMode="outline"
             app:boxCornerRadiusTopStart="10dp"
-            app:boxCornerRadiusTopEnd="10dp"
             app:boxCornerRadiusBottomStart="10dp"
+            app:boxCornerRadiusTopEnd="10dp"
             app:boxCornerRadiusBottomEnd="10dp">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -103,11 +129,16 @@
                 android:hint="Description"/>
         </com.google.android.material.textfield.TextInputLayout>
 
-
-
-
+        <!-- Submit Button -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/SubmitBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Submit"/>
     </LinearLayout>
 
+    <!-- BOTTOM NAVIGATION -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNav"
         android:layout_width="match_parent"
@@ -115,9 +146,5 @@
         android:background="#FFFFFF"
         app:menu="@menu/bottom_nav_menu"
         app:labelVisibilityMode="labeled"/>
-
-</LinearLayout>
-
-
 
 </LinearLayout>
