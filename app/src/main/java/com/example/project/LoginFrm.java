@@ -1,9 +1,12 @@
 package com.example.project;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -12,11 +15,21 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.ArrayList;
+
 public class LoginFrm extends Fragment {
 
     EditText UserName, Password;
     Button LoginBtn,RegBtn;
     String userName, password;
+
 
     @Nullable
     @Override
@@ -37,13 +50,19 @@ public class LoginFrm extends Fragment {
         });
 
         LoginBtn.setOnClickListener(v->{
-            userName = UserName.getText().toString();
-            password = Password.getText().toString();
-            if(userName.equals("Admin") && password.equals("Admin")) {
-                ((MainActivity) getActivity()).ChangeFragment(new OwnerFrmg());
-            }else{
-                Toast.makeText(getContext(), "Enter User Name and Password", Toast.LENGTH_SHORT).show();
-            }
+//            userName = UserName.getText().toString();
+//            password = Password.getText().toString();
+//            if(userName.equals("Admin") && password.equals("Admin")) {
+//                ((MainActivity) getActivity()).ChangeFragment(new OwnerFrmg());
+//            }else{
+//                if(((MainActivity) getActivity()).CheckUser(userName,password)){
+//                  //  ((MainActivity) getActivity()).ChangeFragment(new ClientFrmg());
+//                    Toast.makeText(getContext(), userName + "   ->   " + password, Toast.LENGTH_SHORT).show();
+//                } else{
+//                    Toast.makeText(requireContext(), "Invalid Username or Password", Toast.LENGTH_SHORT).show();
+//                }
+//            }
+            ((MainActivity)getActivity()).ChangeFragment(new SelectUsers());
         });
     }
 }
