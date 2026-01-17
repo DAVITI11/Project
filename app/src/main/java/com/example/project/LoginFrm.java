@@ -30,7 +30,6 @@ public class LoginFrm extends Fragment {
     Button LoginBtn,RegBtn;
     String userName, password;
 
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -50,19 +49,18 @@ public class LoginFrm extends Fragment {
         });
 
         LoginBtn.setOnClickListener(v->{
-//            userName = UserName.getText().toString();
-//            password = Password.getText().toString();
-//            if(userName.equals("Admin") && password.equals("Admin")) {
-//                ((MainActivity) getActivity()).ChangeFragment(new OwnerFrmg());
-//            }else{
-//                if(((MainActivity) getActivity()).CheckUser(userName,password)){
-//                  //  ((MainActivity) getActivity()).ChangeFragment(new ClientFrmg());
-//                    Toast.makeText(getContext(), userName + "   ->   " + password, Toast.LENGTH_SHORT).show();
-//                } else{
-//                    Toast.makeText(requireContext(), "Invalid Username or Password", Toast.LENGTH_SHORT).show();
-//                }
-//            }
-            ((MainActivity)getActivity()).ChangeFragment(new SelectUsers());
+            userName = UserName.getText().toString();
+            password = Password.getText().toString();
+            if(!userName.isEmpty() && !password.isEmpty()) {
+                if (((MainActivity) getActivity()).CheckUser(password, userName)) {
+                    Toast.makeText(getContext(), "Login Successful", Toast.LENGTH_SHORT).show();
+                    ((MainActivity)getActivity()).ChangeFragment(new ClientFrmg());
+                }else{
+                    Toast.makeText(getContext(), "Invalid Username or Password", Toast.LENGTH_SHORT).show();
+                }
+            }else{
+                Toast.makeText(getContext(), "Please Fill All Fields", Toast.LENGTH_SHORT).show();
+            }
         });
     }
 }

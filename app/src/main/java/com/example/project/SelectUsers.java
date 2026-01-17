@@ -34,15 +34,15 @@ public class SelectUsers extends Fragment {
         lst = new ArrayList<>();
 
         // Get all username + password pairs from MainActivity
-        ArrayList<Pair<String,String>> infoList =
-                ((MainActivity)getActivity()).GetAllInfo();
-
-        // Convert pairs into readable strings
-        for (Pair<String, String> p : infoList) {
-            lst.add(p.first + " ----> " + p.second);
-        }
-
-        adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, lst);
-        listV.setAdapter(adapter);
+//        ArrayList<Pair<String,String>> infoList =
+//                ((MainActivity)getActivity()).GetAllInfo();
+//
+//        // Convert pairs into readable strings
+//        for (Pair<String, String> p : infoList) {
+//            lst.add(p.first + " ----> " + p.second);
+//        }
+//
+//        adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, lst);
+//        listV.setAdapter(adapter);
     }
 }

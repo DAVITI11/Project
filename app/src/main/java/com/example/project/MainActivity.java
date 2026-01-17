@@ -1,6 +1,7 @@
 package com.example.project;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.widget.FrameLayout;
 
@@ -17,11 +18,11 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
-
 public class MainActivity extends AppCompatActivity {
 
-    ArrayList<Pair<String,String>> NamePass;
-    FrameLayout cont;
+    ArrayList<Pair<String,String>> NamePass = new ArrayList<>();
+    Handler handler = new Handler();
+    Runnable refreshRunnable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,58 +30,18 @@ public class MainActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
 
-        cont = findViewById(R.id.cont);
-        NamePass = new ArrayList<>();
-      //  loadUsersFromServer();
-        // ChangeFragment(new LoginFrm());
-        ChangeFragment(new ClientFrmg());
+        ChangeFragment(new LoginFrm());
+
+        startAutoRefresh();  // moved here
     }
 
     public void ChangeFragment(Fragment fm) {
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.cont, fm)
-                .commit();
-    }
-    public void ChangeFragment(Fragment fm1, Fragment fm2) {
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.cont, fm1)
                 .addToBackStack(null)
                 .commit();
     }
-    public void loadUsersFromServer() {
-
-        new Thread(() -> {
-            try {
-                // Fetch JSON
-                String json = httpGet("http://:8080/users");
-
-                JSONArray arr = new JSONArray(json);
-
-                // Clear old list
-                NamePass.clear();
-
-                for (int i = 0; i < arr.length(); i++) {
-                    JSONObject obj = arr.getJSONObject(i);
-
-                    String pass = obj.getString("password");
-                    String name = obj.getString("name");
-
-                    NamePass.add(new Pair<>(name, pass));
-
-                    Log.d("JSON", "User: " + name + " Password: " + pass);
-                }
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-
-
-        }).start();
-    }
-
     private String httpGet(String urlString) {
         StringBuilder result = new StringBuilder();
 
@@ -106,16 +67,52 @@ public class MainActivity extends AppCompatActivity {
         return result.toString();
     }
 
-    public boolean CheckUser(String name, String pass) {
+    private void loadUsersFromServer() {
+        new Thread(() -> {
 
+            String json = httpGet("http://");
+
+
+            try {
+                JSONArray arr = new JSONArray(json);
+                ArrayList<Pair<String,String>> tempList = new ArrayList<>();
+
+                for (int i = 0; i < arr.length(); i++) {
+                    JSONObject obj = arr.getJSONObject(i);
+
+                    String name = obj.getString("password");
+                    String password = obj.getString("name");
+
+                    tempList.add(new Pair<>(name, password));
+                }
+
+                handler.post(() -> {
+                    NamePass.clear();
+                    NamePass.addAll(tempList);
+                });
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        }).start();
+    }
+
+    private void startAutoRefresh() {
+        refreshRunnable = () -> {
+            loadUsersFromServer();
+            handler.postDelayed(refreshRunnable, 3000);
+        };
+        handler.post(refreshRunnable);
+    }
+
+    public boolean CheckUser(String name, String pass) {
         for (Pair<String, String> p : NamePass) {
+            Log.d("check", p.first + " " + p.second);
             if (p.first.equals(name) && p.second.equals(pass)) {
                 return true;
             }
         }
         return false;
-    }
-    public ArrayList<Pair<String,String>> GetAllInfo(){
-        return NamePass;
     }
 }
