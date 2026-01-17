@@ -1,30 +1,31 @@
-<LinearLayout android:id="@+id/rootLayout"
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
+    android:id="@+id/rootLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
 
-    <!-- Top Bar -->
     <LinearLayout
-        android:layout_width="match_parent"
+        android:id="@+id/topBar"
+        android:layout_width="0dp"
         android:layout_height="50dp"
         android:background="#FFA500"
         android:orientation="horizontal"
-        android:gravity="center_vertical">
+        android:gravity="center_vertical"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
-        <!-- Home Icon Button -->
         <ImageView
             android:id="@+id/btnHomeTop"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:padding="8dp"
             android:layout_marginLeft="10dp"
             android:src="@drawable/ic_home"
             android:contentDescription="Home" />
 
-        <!-- Title -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -35,87 +36,28 @@
             android:layout_marginLeft="15dp"/>
     </LinearLayout>
 
-    <!-- Horizontal categories -->
-    <HorizontalScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#FFFFFF"
-        android:scrollbars="none">
-
-        <LinearLayout
-            android:id="@+id/categoryContainer"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="10dp">
-
-            <TextView android:id="@+id/SedanId"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Sedan"
-                android:textSize="18sp"
-                android:padding="12dp"
-                android:layout_marginEnd="20dp"/>
-
-            <TextView android:id="@+id/SUVId"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="SUV"
-                android:textSize="18sp"
-                android:padding="12dp"
-                android:layout_marginEnd="20dp"/>
-
-            <TextView android:id="@+id/CoupeId"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Coupe"
-                android:textSize="18sp"
-                android:padding="12dp"
-                android:layout_marginEnd="20dp"/>
-
-            <TextView android:id="@+id/PickupId"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Pickup"
-                android:textSize="18sp"
-                android:padding="12dp"
-                android:layout_marginEnd="20dp"/>
-
-            <TextView android:id="@+id/SportId"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Sport"
-                android:textSize="18sp"
-                android:padding="12dp"
-                android:layout_marginEnd="20dp"/>
-
-            <TextView android:id="@+id/VanId"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="VAN"
-                android:textSize="18sp"
-                android:padding="12dp"
-                android:layout_marginEnd="20dp"/>
-
-        </LinearLayout>
-    </HorizontalScrollView>
-
-    <LinearLayout
+    <FrameLayout
+        android:id="@+id/contentFrame"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1">
-        <ListView
-            android:id="@+id/listView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"></ListView>
-    </LinearLayout>
+        app:layout_constraintTop_toBottomOf="@id/topBar"
+        app:layout_constraintBottom_toTopOf="@id/bottomNav"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
+
+    </FrameLayout>
+
+    <!-- BOTTOM NAVIGATION -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNav"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="80dp"
         android:background="#FFFFFF"
         app:menu="@menu/bottom_nav_menu"
-        app:labelVisibilityMode="labeled"/>
+        app:labelVisibilityMode="labeled"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

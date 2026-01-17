@@ -4,8 +4,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -15,7 +15,9 @@ import com.example.project.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class ClientFrmg extends Fragment {
-    TextView SedanId, SUVId, CoupeId, PickupId, SportId, VanId;
+    FrameLayout contentFrame;
+    ImageView btnHomeTop;
+    BottomNavigationView bottomNav;
 
     @Nullable
     @Override
@@ -25,66 +27,41 @@ public class ClientFrmg extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        SedanId = view.findViewById(R.id.SedanId);
-        SUVId = view.findViewById(R.id.SUVId);
-        CoupeId = view.findViewById(R.id.CoupeId);
-        PickupId = view.findViewById(R.id.PickupId);
-        SportId = view.findViewById(R.id.SportId);
-        VanId = view.findViewById(R.id.VanId);
-        SedanId.setOnClickListener(v -> {
-            Toast.makeText(getContext(), "Sedan clicked", Toast.LENGTH_SHORT).show();
-        });
-        SUVId.setOnClickListener(v -> {
-            Toast.makeText(getContext(), "SUV clicked", Toast.LENGTH_SHORT).show();
-        });
-        CoupeId.setOnClickListener(v -> {
-            Toast.makeText(getContext(), "Coupe clicked", Toast.LENGTH_SHORT).show();
-        });
-        PickupId.setOnClickListener(v -> {
-            Toast.makeText(getContext(), "Pickup clicked", Toast.LENGTH_SHORT).show();
-        });
-        SportId.setOnClickListener(v -> {
-            Toast.makeText(getContext(), "Sport clicked", Toast.LENGTH_SHORT).show();
-        });
-        VanId.setOnClickListener(v -> {
-            Toast.makeText(getContext(), "Van clicked", Toast.LENGTH_SHORT).show();
+
+        contentFrame = view.findViewById(R.id.contentFrame);
+        btnHomeTop = view.findViewById(R.id.btnHomeTop);
+
+        btnHomeTop.setOnClickListener(v->{
+            ChangeFrm(new Fragment_Home());
+            bottomNav.setSelectedItemId(R.id.nav_home);
         });
 
 
 
-        BottomNavigationView bottomNav = view.findViewById(R.id.bottomNav);
-        int id = bottomNav.getSelectedItemId();
+        ChangeFrm(new Fragment_Home());
+
+
+        bottomNav = view.findViewById(R.id.bottomNav);
+
 
         bottomNav.setOnItemSelectedListener(item -> {
 
-            int itemId = item.getItemId();
+            Fragment selected = null;
 
-            if (itemId == R.id.nav_home) {
-                Toast.makeText(getContext(), "Home clicked", Toast.LENGTH_SHORT).show();
-                return true;
-            }
+            if (item.getItemId() == R.id.nav_home)  selected = new Fragment_Home();
+            if (item.getItemId() == R.id.nav_saved) selected = new Fragment_Saved();
+            if (item.getItemId() == R.id.nav_sell)  selected = new Fragment_Sell();
+            if (item.getItemId() == R.id.nav_profile) selected = new Fragment_Profile();
 
-            if (itemId == R.id.nav_saved) {
-                Toast.makeText(getContext(), "Saved clicked", Toast.LENGTH_SHORT).show();
-                return true;
-            }
+            ChangeFrm(selected);
 
-            if (itemId == R.id.nav_sell) {
-                ((MainActivity)getActivity()).ChangeFragment(new Fragment_Sell());
-                Toast.makeText(getContext(), "Sell clicked", Toast.LENGTH_SHORT).show();
-                return true;
-            }
-
-            if (itemId == R.id.nav_profile) {
-                Toast.makeText(getContext(), "Profile clicked", Toast.LENGTH_SHORT).show();
-                return true;
-            }
-
-            return false;
+            return true;
         });
-
-
-        //bottomNav.setSelectedItemId(R.id.nav_home);
+    }
+    void ChangeFrm(Fragment fm){
+        requireActivity().getSupportFragmentManager().beginTransaction()
+                .replace(R.id.contentFrame, fm)
+                .commit();
     }
 
 }

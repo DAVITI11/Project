@@ -43,7 +43,13 @@ public class MainActivity extends AppCompatActivity {
                 .replace(R.id.cont, fm)
                 .commit();
     }
-
+    public void ChangeFragment(Fragment fm1, Fragment fm2) {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.cont, fm1)
+                .addToBackStack(null)
+                .commit();
+    }
     public void loadUsersFromServer() {
 
         new Thread(() -> {

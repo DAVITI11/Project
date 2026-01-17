@@ -18,7 +18,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 public class Fragment_Sell extends Fragment {
-    ImageView BtnHm,AddPhoto;
+    ImageView AddPhoto;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -28,11 +28,8 @@ public class Fragment_Sell extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        BtnHm = view.findViewById(R.id.btnHomeTop);
+
         AddPhoto = view.findViewById(R.id.carImage);
-        BtnHm.setOnClickListener(v -> {
-            ((MainActivity)getActivity()).ChangeFragment(new ClientFrmg());
-        });
 
         Spinner spinner = view.findViewById(R.id.spinnerCars);
 
@@ -44,6 +41,7 @@ public class Fragment_Sell extends Fragment {
         );
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
+        spinner.setSelection(0);
 
 
         AddPhoto.setOnClickListener(v -> {
