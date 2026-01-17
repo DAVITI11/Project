@@ -1,85 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <LinearLayout
-        android:id="@+id/categoriesLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent" android:layout_height="match_parent">
 
-        <HorizontalScrollView
-            android:id="@+id/categoryScroll"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#FFFFFF"
-            android:scrollbars="none">
+    <LinearLayout android:id="@+id/categoriesLayout" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical">
 
-            <LinearLayout
-                android:id="@+id/categoryContainer"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="10dp">
+        <HorizontalScrollView android:id="@+id/categoryScroll" android:layout_width="match_parent" android:layout_height="wrap_content" android:background="#FFFFFF" android:scrollbars="none">
 
-                <TextView android:id="@+id/SedanId"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Sedan"
-                    android:textSize="18sp"
-                    android:padding="12dp"
-                    android:layout_marginEnd="20dp"/>
+            <LinearLayout android:id="@+id/categoryContainer" android:layout_width="wrap_content" android:layout_height="wrap_content" android:orientation="horizontal" android:padding="10dp">
 
-                <TextView android:id="@+id/SUVId"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="SUV"
-                    android:textSize="18sp"
-                    android:padding="12dp"
-                    android:layout_marginEnd="20dp"/>
+                <TextView android:id="@+id/SedanId" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Sedan" android:textSize="18sp" android:padding="12dp" android:layout_marginEnd="20dp"/>
 
-                <TextView android:id="@+id/CoupeId"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Coupe"
-                    android:textSize="18sp"
-                    android:padding="12dp"
-                    android:layout_marginEnd="20dp"/>
+                <TextView android:id="@+id/SUVId" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="SUV" android:textSize="18sp" android:padding="12dp" android:layout_marginEnd="20dp"/>
 
-                <TextView android:id="@+id/PickupId"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Pickup"
-                    android:textSize="18sp"
-                    android:padding="12dp"
-                    android:layout_marginEnd="20dp"/>
+                <TextView android:id="@+id/CoupeId" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Coupe" android:textSize="18sp" android:padding="12dp" android:layout_marginEnd="20dp"/>
 
-                <TextView android:id="@+id/SportId"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Sport"
-                    android:textSize="18sp"
-                    android:padding="12dp"
-                    android:layout_marginEnd="20dp"/>
+                <TextView android:id="@+id/PickupId" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Pickup" android:textSize="18sp" android:padding="12dp" android:layout_marginEnd="20dp"/>
 
-                <TextView android:id="@+id/VanId"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="VAN"
-                    android:textSize="18sp"
-                    android:padding="12dp"
-                    android:layout_marginEnd="20dp"/>
+                <TextView android:id="@+id/SportId" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Sport" android:textSize="18sp" android:padding="12dp" android:layout_marginEnd="20dp"/>
+
+                <TextView android:id="@+id/VanId" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="VAN" android:textSize="18sp" android:padding="12dp" android:layout_marginEnd="20dp"/>
 
             </LinearLayout>
+
         </HorizontalScrollView>
 
-        <!-- List of items -->
-        <ListView
-            android:id="@+id/listView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="10dp"/>
-    </LinearLayout>
+        <ListView android:id="@+id/listView" android:layout_width="match_parent" android:layout_height="match_parent" android:layout_marginTop="10dp"/>
 
+    </LinearLayout>
 
 </LinearLayout>
