@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
     private void loadUsersFromServer() {
         new Thread(() -> {
 
-            String json = httpGet("http://");
+            String json = httpGet("");
 
 
             try {
@@ -97,6 +97,28 @@ public class MainActivity extends AppCompatActivity {
 
         }).start();
     }
+    public void addUserToServer(String name, String password) {
+        new Thread(() -> {
+            try {
+                URL url = new URL("");
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+
+                conn.setRequestMethod("POST");
+                conn.setDoOutput(true);
+                conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+
+                String data = "name=" + name + "&password=" + password;
+
+                conn.getOutputStream().write(data.getBytes());
+
+                int response = conn.getResponseCode();
+                Log.d("SERVER", "Response code: " + response);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }).start();
+    }
 
     private void startAutoRefresh() {
         refreshRunnable = () -> {
@@ -115,4 +137,5 @@ public class MainActivity extends AppCompatActivity {
         }
         return false;
     }
+
 }

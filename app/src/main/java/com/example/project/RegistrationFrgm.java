@@ -17,8 +17,8 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 public class RegistrationFrgm extends Fragment {
     Button Reg,GotoLogin;
-    String userName, password, email, address;
-    EditText UserNm, Pass, eml, adrs;
+    String userName, password, firstNm,lasNm,email, address;
+    EditText UserNm, Pass,FirstNm,LastNm, eml, adrs;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -31,6 +31,8 @@ public class RegistrationFrgm extends Fragment {
 
         UserNm = view.findViewById(R.id.UserNm);
         Pass = view.findViewById(R.id.Pass);
+        FirstNm = view.findViewById(R.id.FirstName);
+        LastNm = view.findViewById(R.id.LastName);
         eml = view.findViewById(R.id.email);
         adrs = view.findViewById(R.id.address);
         Reg = view.findViewById(R.id.RegBtn);
@@ -48,11 +50,20 @@ public class RegistrationFrgm extends Fragment {
         });
 
         Reg.setOnClickListener(v->{
+//            userName = UserNm.getText().toString();
+//            password = Pass.getText().toString();
+//            email = eml.getText().toString();
+//            address = adrs.getText().toString();
+//            if(!userName.isEmpty() && !password.isEmpty() && !email.isEmpty() && !address.isEmpty()){
+//                Toast.makeText(requireContext(), "Registration Successful", Toast.LENGTH_SHORT).show();
+//            }else{
+//                Toast.makeText(requireContext(), "Enter All Fields", Toast.LENGTH_SHORT).show();
+//            }
             userName = UserNm.getText().toString();
             password = Pass.getText().toString();
-            email = eml.getText().toString();
-            address = adrs.getText().toString();
-            if(!userName.isEmpty() && !password.isEmpty() && !email.isEmpty() && !address.isEmpty()){
+
+            if(!userName.isEmpty() && !password.isEmpty()){
+                ((MainActivity)getActivity()).addUserToServer(userName, password);
                 Toast.makeText(requireContext(), "Registration Successful", Toast.LENGTH_SHORT).show();
             }else{
                 Toast.makeText(requireContext(), "Enter All Fields", Toast.LENGTH_SHORT).show();
