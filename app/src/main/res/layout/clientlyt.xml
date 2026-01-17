@@ -4,7 +4,7 @@
 
         <ImageView android:id="@+id/btnHomeTop" android:layout_width="50dp" android:layout_height="50dp" android:padding="8dp" android:layout_marginLeft="10dp" android:src="@drawable/ic_home" android:contentDescription="Home" />
 
-        <TextView android:layout_width="wrap_content" android:layout_height="match_parent" android:text="Online Shop" android:textColor="#FFFFFF" android:textSize="22sp" android:gravity="center_vertical" android:layout_marginLeft="15dp"/>
+        <TextView android:id="@+id/HeadTxt" android:layout_width="wrap_content" android:layout_height="match_parent" android:text="Online Shop" android:textColor="#FFFFFF" android:textSize="22sp" android:gravity="center_vertical" android:layout_marginLeft="15dp"/>
 
     </LinearLayout>
 

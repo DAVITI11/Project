@@ -21,7 +21,6 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
 
     ArrayList<Pair<String,String>> NamePass;
-
     FrameLayout cont;
 
     @Override
@@ -55,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
         new Thread(() -> {
             try {
                 // Fetch JSON
-                String json = httpGet("http://10.96.161.72:8080/users");
+                String json = httpGet("http://:8080/users");
 
                 JSONArray arr = new JSONArray(json);
 

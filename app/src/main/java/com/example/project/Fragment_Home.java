@@ -13,8 +13,7 @@ import androidx.fragment.app.Fragment;
 
 public class Fragment_Home extends Fragment {
     TextView Sedan, SUV, Coupe, Pickup, Sport, Van;
-    @Nullable
-    @Override
+
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_home, container, false);
     }
@@ -22,30 +21,25 @@ public class Fragment_Home extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         Sedan = view.findViewById(R.id.SedanId);
         SUV = view.findViewById(R.id.SUVId);
         Coupe = view.findViewById(R.id.CoupeId);
         Pickup = view.findViewById(R.id.PickupId);
         Sport = view.findViewById(R.id.SportId);
         Van = view.findViewById(R.id.VanId);
-        Sedan.setOnClickListener(v->{
-            Toast.makeText(requireContext(), "Sedan", Toast.LENGTH_SHORT).show();
-        });
-        SUV.setOnClickListener(v->{
-            Toast.makeText(requireContext(), "SUV", Toast.LENGTH_SHORT).show();
-        });
-        Coupe.setOnClickListener(v-> {
-            Toast.makeText(requireContext(), "Coupe", Toast.LENGTH_SHORT).show();
-        });
-        Pickup.setOnClickListener(v->{
-            Toast.makeText(requireContext(), "Pickup", Toast.LENGTH_SHORT).show();
-        });
-        Sport.setOnClickListener(v-> {
-            Toast.makeText(requireContext(), "Sport", Toast.LENGTH_SHORT).show();
-        });
-        Van.setOnClickListener(v-> {
-            Toast.makeText(requireContext(), "Van", Toast.LENGTH_SHORT).show();
-        });
+
+        Sedan.setOnClickListener(v->{Toast.makeText(requireContext(), "Sedan", Toast.LENGTH_SHORT).show();});
+
+        SUV.setOnClickListener(v->{Toast.makeText(requireContext(), "SUV", Toast.LENGTH_SHORT).show();});
+
+        Coupe.setOnClickListener(v-> {Toast.makeText(requireContext(), "Coupe", Toast.LENGTH_SHORT).show();});
+
+        Pickup.setOnClickListener(v->{Toast.makeText(requireContext(), "Pickup", Toast.LENGTH_SHORT).show();});
+
+        Sport.setOnClickListener(v-> {Toast.makeText(requireContext(), "Sport", Toast.LENGTH_SHORT).show();});
+
+        Van.setOnClickListener(v-> {Toast.makeText(requireContext(), "Van", Toast.LENGTH_SHORT).show();});
 
     }
 }
