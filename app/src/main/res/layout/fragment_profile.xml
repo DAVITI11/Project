@@ -17,7 +17,9 @@
 
             <TextView android:id="@+id/labelPhone" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Phone" android:textStyle="bold"/>
 
-            <TextView android:id="@+id/valuePhone" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="##########" android:paddingBottom="15dp" />
+
+            <TextView android:id="@+id/valuePhone" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="##########" android:paddingBottom="15dp" />
+
 
             <TextView android:id="@+id/labelAddress" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Address" android:textStyle="bold" />
 

@@ -1,5 +1,6 @@
 package com.example.project;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -30,7 +31,14 @@ public class MainActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
 
-        ChangeFragment(new LoginFrm());
+        SharedPreferences prefs = getSharedPreferences("MyApp", MODE_PRIVATE);
+        boolean loggedIn = prefs.getBoolean("isLoggedIn", false);
+
+        if (loggedIn) {
+            ChangeFragment(new ClientFrmg()); // Go directly to home
+        } else {
+            ChangeFragment(new LoginFrm()); // Show login screen
+        }
 
         startAutoRefresh();  // moved here
     }
@@ -70,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
     private void loadUsersFromServer() {
         new Thread(() -> {
 
-            String json = httpGet("");
+            String json = httpGet("http://10.96.161.72:8080/users");
 
 
             try {
@@ -100,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
     public void addUserToServer(String name, String password) {
         new Thread(() -> {
             try {
-                URL url = new URL("");
+                URL url = new URL("http:10.96.161.72:8080/add_user");
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
                 conn.setRequestMethod("POST");

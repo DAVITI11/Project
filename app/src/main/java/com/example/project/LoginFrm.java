@@ -1,5 +1,8 @@
 package com.example.project;
 
+import static android.content.Context.MODE_PRIVATE;
+
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -54,6 +57,11 @@ public class LoginFrm extends Fragment {
             if(!userName.isEmpty() && !password.isEmpty()) {
                 if (((MainActivity) getActivity()).CheckUser(password, userName)) {
                     Toast.makeText(getContext(), "Login Successful", Toast.LENGTH_SHORT).show();
+                    SharedPreferences prefs = getActivity().getSharedPreferences("MyApp", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = prefs.edit();
+                    editor.putBoolean("isLoggedIn", true);
+                    editor.apply();
+
                     ((MainActivity)getActivity()).ChangeFragment(new ClientFrmg());
                 }else{
                     Toast.makeText(getContext(), "Invalid Username or Password", Toast.LENGTH_SHORT).show();

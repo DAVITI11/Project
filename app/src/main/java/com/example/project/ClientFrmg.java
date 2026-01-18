@@ -62,7 +62,7 @@ public class ClientFrmg extends Fragment {
             return true;
         });
     }
-    void ChangeFrm(Fragment fm){
+    public void ChangeFrm(Fragment fm){
         requireActivity().getSupportFragmentManager().beginTransaction()
                 .replace(R.id.contentFrame, fm)
                 .commit();
