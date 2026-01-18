@@ -1,10 +1,17 @@
 package com.example.project;
 
+import static android.app.PendingIntent.getActivity;
+
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Base64;
 import android.util.Log;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,6 +22,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -127,6 +135,122 @@ public class MainActivity extends AppCompatActivity {
             }
         }).start();
     }
+    public void AddUserInfo(String firstname, String lastname, String email, String address){
+        new Thread(() -> {
+            try {
+                URL url = new URL("http:10.96.161.72:8080/add_userinfo");
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+
+                conn.setRequestMethod("POST");
+                conn.setDoOutput(true);
+                conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+
+                String data = "firstname=" + firstname + "&lastname=" + lastname + "&email=" + email + "&address=" + address;
+
+                conn.getOutputStream().write(data.getBytes());
+
+                int response = conn.getResponseCode();
+                Log.d("SERVER", "Response code: " + response);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }).start();
+    }
+    public void AddCarInfo(String carType, String model, String year,
+                           String price, String description, String base64Image) {
+
+        new Thread(() -> {
+            try {
+                URL url = new URL("http://10.96.161.72:8080/add_car");
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+
+                conn.setRequestMethod("POST");
+                conn.setDoOutput(true);
+                conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+
+                // Build POST body
+                String data =
+                        "car_type=" + carType +
+                                "&model=" + model +
+                                "&year=" + year +
+                                "&price=" + price +
+                                "&description=" + description +
+                                "&image=" + base64Image;
+
+                conn.getOutputStream().write(data.getBytes());
+
+                int response = conn.getResponseCode();
+                Log.d("SERVER", "Car Added Response: " + response);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }).start();
+    }
+
+
+    public void getCarInfo(CarCallback callback) {
+
+        new Thread(() -> {
+            ArrayList<Car> tempList = new ArrayList<>();
+
+            try {
+                URL url = new URL("http://10.0.2.2:8080/get_carinfo");
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+
+                conn.setRequestMethod("GET");
+
+                BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                StringBuilder result = new StringBuilder();
+                String line;
+
+                while ((line = br.readLine()) != null) {
+                    result.append(line);
+                }
+
+                JSONArray arr = new JSONArray(result.toString());
+
+                for (int i = 0; i < arr.length(); i++) {
+                    JSONObject obj = arr.getJSONObject(i);
+
+                    String carType = obj.getString("car_type");
+                    String model = obj.getString("model");
+                    String year = obj.getString("year");
+                    String price = obj.getString("price");
+                    String desc = obj.getString("description");
+
+                    Bitmap bitmap = null;
+                    if (!obj.isNull("image")) {
+                        String base64Image = obj.optString("image", "");
+                        if (!base64Image.isEmpty()) {
+                            // Remove possible prefix like "data:image/png;base64,"
+                            if (base64Image.contains(",")) {
+                                base64Image = base64Image.split(",")[1];
+                            }
+                            try {
+                                byte[] bytes = android.util.Base64.decode(base64Image, android.util.Base64.DEFAULT);
+                                bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                                bitmap = null;
+                            }
+                        }
+                    }
+
+
+                    tempList.add(new Car(carType, model, year, price, desc, bitmap));
+                }
+
+                runOnUiThread(() -> callback.onCarListLoaded(tempList));
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        }).start();
+    }
+
 
     private void startAutoRefresh() {
         refreshRunnable = () -> {

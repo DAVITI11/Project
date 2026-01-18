@@ -9,7 +9,7 @@
 
         <com.google.android.material.textfield.TextInputLayout android:layout_width="match_parent" android:layout_height="wrap_content" app:boxBackgroundMode="outline">
 
-            <com.google.android.material.textfield.TextInputEditText android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Model" android:singleLine="true" android:maxLines="1" android:inputType="text"/>
+            <com.google.android.material.textfield.TextInputEditText android:id="@+id/Model" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Model" android:singleLine="true" android:maxLines="1" android:inputType="text"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -21,7 +21,7 @@
 
         <com.google.android.material.textfield.TextInputLayout android:layout_width="match_parent" android:layout_height="wrap_content" app:boxBackgroundMode="outline">
 
-            <com.google.android.material.textfield.TextInputEditText android:layout_width="match_parent" android:layout_height="wrap_content" android:inputType="number" android:hint="Year"/>
+            <com.google.android.material.textfield.TextInputEditText android:id="@+id/Year" android:layout_width="match_parent" android:layout_height="wrap_content" android:inputType="number" android:hint="Year"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -29,7 +29,7 @@
 
         <com.google.android.material.textfield.TextInputLayout android:layout_width="match_parent" android:layout_height="wrap_content" app:boxBackgroundMode="outline">
 
-            <com.google.android.material.textfield.TextInputEditText android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Price" android:singleLine="true" android:maxLines="1" android:inputType="numberDecimal"/>
+            <com.google.android.material.textfield.TextInputEditText android:id="@+id/Price" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Price" android:singleLine="true" android:maxLines="1" android:inputType="numberDecimal"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -37,7 +37,7 @@
 
         <com.google.android.material.textfield.TextInputLayout android:layout_width="match_parent" android:layout_height="wrap_content" app:boxBackgroundMode="outline">
 
-            <com.google.android.material.textfield.TextInputEditText android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Description" android:inputType="textMultiLine" android:maxLines="5"/>
+            <com.google.android.material.textfield.TextInputEditText android:id="@+id/Description" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Description" android:inputType="textMultiLine" android:maxLines="5"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 

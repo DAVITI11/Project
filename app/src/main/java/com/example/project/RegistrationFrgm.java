@@ -50,20 +50,15 @@ public class RegistrationFrgm extends Fragment {
         });
 
         Reg.setOnClickListener(v->{
-//            userName = UserNm.getText().toString();
-//            password = Pass.getText().toString();
-//            email = eml.getText().toString();
-//            address = adrs.getText().toString();
-//            if(!userName.isEmpty() && !password.isEmpty() && !email.isEmpty() && !address.isEmpty()){
-//                Toast.makeText(requireContext(), "Registration Successful", Toast.LENGTH_SHORT).show();
-//            }else{
-//                Toast.makeText(requireContext(), "Enter All Fields", Toast.LENGTH_SHORT).show();
-//            }
+            firstNm = FirstNm.getText().toString();
+            lasNm = LastNm.getText().toString();
+            email = eml.getText().toString();
+            address = adrs.getText().toString();
             userName = UserNm.getText().toString();
             password = Pass.getText().toString();
-
-            if(!userName.isEmpty() && !password.isEmpty()){
+            if(!userName.isEmpty() && !password.isEmpty() && !firstNm.isEmpty() && !lasNm.isEmpty() && !email.isEmpty() && !address.isEmpty()){
                 ((MainActivity)getActivity()).addUserToServer(userName, password);
+                ((MainActivity)getActivity()).AddUserInfo(firstNm, lasNm, email, address);
                 Toast.makeText(requireContext(), "Registration Successful", Toast.LENGTH_SHORT).show();
             }else{
                 Toast.makeText(requireContext(), "Enter All Fields", Toast.LENGTH_SHORT).show();
