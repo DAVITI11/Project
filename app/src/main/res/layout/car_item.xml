@@ -25,11 +25,31 @@
             android:textColor="#000"/>
 
         <TextView
+            android:id="@+id/carType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:textColor="#555"/>
+
+
+        <TextView
+            android:id="@+id/carYear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:textColor="#555"/>
+
+        <TextView
             android:id="@+id/carPrice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="16sp"
             android:textColor="#555"/>
+        <TextView
+            android:id="@+id/carDesc"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"></TextView>
+
     </LinearLayout>
 
 </LinearLayout>

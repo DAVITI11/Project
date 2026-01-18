@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,16 +18,18 @@ import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
 
     ArrayList<Pair<String,String>> NamePass = new ArrayList<>();
-    String pas;
+    String pas,usNm;
     Handler handler = new Handler();
     Runnable refreshRunnable;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,21 +41,20 @@ public class MainActivity extends AppCompatActivity {
         boolean loggedIn = prefs.getBoolean("isLoggedIn", false);
 
         if (loggedIn) {
-            ChangeFragment(new ClientFrmg()); // Go directly to home
+            ChangeFragment(new ClientFrmg());
         } else {
-            ChangeFragment(new LoginFrm()); // Show login screen
+            ChangeFragment(new LoginFrm());
         }
-
-        startAutoRefresh();  // moved here
+        startAutoRefresh();
     }
 
     public void ChangeFragment(Fragment fm) {
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.cont, fm)
-                .addToBackStack(null)
                 .commit();
     }
+
     private String httpGet(String urlString) {
         StringBuilder result = new StringBuilder();
 
@@ -83,7 +85,6 @@ public class MainActivity extends AppCompatActivity {
 
             String json = httpGet("http://10.96.161.72:8080/users");
 
-
             try {
                 JSONArray arr = new JSONArray(json);
                 ArrayList<Pair<String,String>> tempList = new ArrayList<>();
@@ -91,8 +92,8 @@ public class MainActivity extends AppCompatActivity {
                 for (int i = 0; i < arr.length(); i++) {
                     JSONObject obj = arr.getJSONObject(i);
 
-                    String name = obj.getString("password");
-                    String password = obj.getString("name");
+                    String password = obj.getString("password");
+                    String name = obj.getString("name");
 
                     tempList.add(new Pair<>(name, password));
                 }
@@ -108,41 +109,49 @@ public class MainActivity extends AppCompatActivity {
 
         }).start();
     }
+
     public void addUserToServer(String name, String password) {
-        new Thread(() -> {
-            try {
-                URL url = new URL("http:10.96.161.72:8080/add_user");
-                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            new Thread(() -> {
+                try {
+                    URL url = new URL("http://10.96.161.72:8080/add_user");
+                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
-                conn.setRequestMethod("POST");
-                conn.setDoOutput(true);
-                conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+                    conn.setRequestMethod("POST");
+                    conn.setDoOutput(true);
+                    conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
 
-                String data = "name=" + name + "&password=" + password;
+                    String data = "name=" + name + "&password=" + password;
 
-                conn.getOutputStream().write(data.getBytes());
+                    conn.getOutputStream().write(data.getBytes(StandardCharsets.UTF_8));
 
-                int response = conn.getResponseCode();
-                Log.d("SERVER", "Response code: " + response);
+                    int response = conn.getResponseCode();
+                    Log.d("SERVER", "Response code: " + response);
 
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }).start();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }).start();
+            startAutoRefresh();
     }
+
     public void AddUserInfo(String firstname, String lastname, String email, String address,String username){
         new Thread(() -> {
             try {
-                URL url = new URL("http:10.96.161.72:8080/add_userinfo");
+                URL url = new URL("http://10.96.161.72:8080/add_userinfo");
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
                 conn.setRequestMethod("POST");
                 conn.setDoOutput(true);
                 conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
 
-                String data = "firstname=" + firstname + "&lastname=" + lastname + "&email=" + email + "&address=" + address + "&username=" + username;
+                String data =
+                        "firstname=" + firstname +
+                                "&lastname=" + lastname +
+                                "&email=" + email +
+                                "&address=" + address +
+                                "&username=" + username;
 
-                conn.getOutputStream().write(data.getBytes());
+                conn.getOutputStream().write(data.getBytes(StandardCharsets.UTF_8));
 
                 int response = conn.getResponseCode();
                 Log.d("SERVER", "Response code: " + response);
@@ -152,6 +161,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }).start();
     }
+
     public void AddCarInfo(String carType, String model, String year,
                            String price, String description, String base64Image) {
 
@@ -164,16 +174,16 @@ public class MainActivity extends AppCompatActivity {
                 conn.setDoOutput(true);
                 conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
 
-                // Build POST body
                 String data =
-                        "car_type=" + carType +
-                                "&model=" + model +
-                                "&year=" + year +
-                                "&price=" + price +
-                                "&description=" + description +
-                                "&image=" + base64Image;
+                        "car_type=" + URLEncoder.encode(carType, StandardCharsets.UTF_8.toString()) +
+                                "&model=" + URLEncoder.encode(model, StandardCharsets.UTF_8.toString()) +
+                                "&year=" + URLEncoder.encode(year, StandardCharsets.UTF_8.toString()) +
+                                "&price=" + URLEncoder.encode(price, StandardCharsets.UTF_8.toString()) +
+                                "&description=" + URLEncoder.encode(description, StandardCharsets.UTF_8.toString()) +
+                                "&image=" + URLEncoder.encode(base64Image, StandardCharsets.UTF_8.toString()) +
+                                "&owner=" + URLEncoder.encode(usNm, StandardCharsets.UTF_8.toString());
 
-                conn.getOutputStream().write(data.getBytes());
+                conn.getOutputStream().write(data.getBytes(StandardCharsets.UTF_8));
 
                 int response = conn.getResponseCode();
                 Log.d("SERVER", "Car Added Response: " + response);
@@ -184,13 +194,12 @@ public class MainActivity extends AppCompatActivity {
         }).start();
     }
 
-
     public void getCarInfo(CarCallback callback) {
         new Thread(() -> {
             ArrayList<Car> tempList = new ArrayList<>();
 
             try {
-                URL url = new URL("http://10.0.2.2:8080/get_carinfo");
+                URL url = new URL("http://10.96.161.72:8080/get_carinfo");
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
                 conn.setRequestMethod("GET");
@@ -218,7 +227,6 @@ public class MainActivity extends AppCompatActivity {
                     if (!obj.isNull("image")) {
                         String base64Image = obj.optString("image", "");
                         if (!base64Image.isEmpty()) {
-                            // Remove possible prefix like "data:image/png;base64,"
                             if (base64Image.contains(",")) {
                                 base64Image = base64Image.split(",")[1];
                             }
@@ -232,7 +240,6 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
 
-
                     tempList.add(new Car(carType, model, year, price, desc, bitmap));
                 }
 
@@ -244,7 +251,6 @@ public class MainActivity extends AppCompatActivity {
 
         }).start();
     }
-
 
     private void startAutoRefresh() {
         refreshRunnable = () -> {
@@ -259,14 +265,26 @@ public class MainActivity extends AppCompatActivity {
             Log.d("check", p.first + " " + p.second);
             if (p.first.equals(name) && p.second.equals(pass)) {
                 pas = pass;
+                usNm = name;
                 Log.d("check", "true");
                 return true;
             }
         }
         return false;
     }
+    public boolean CheckName(String name){
+        for(Pair<String,String>p:NamePass){
+            if(p.first.equals(name)){
+                return true;
+            }
+        }
+        return false;
+    }
+
     public String getPas(){
         return pas;
     }
-
+    public String getUsNm(){
+        return usNm;
+    }
 }

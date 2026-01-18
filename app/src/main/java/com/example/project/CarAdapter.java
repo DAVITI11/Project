@@ -12,6 +12,8 @@ import android.widget.TextView;
 import com.example.project.Car;
 import com.example.project.R;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 
 public class CarAdapter extends BaseAdapter {
@@ -49,11 +51,17 @@ public class CarAdapter extends BaseAdapter {
         ImageView carImage = convertView.findViewById(R.id.carImage);
         TextView modelText = convertView.findViewById(R.id.carModel);
         TextView priceText = convertView.findViewById(R.id.carPrice);
+        TextView year = convertView.findViewById(R.id.Year);
+        TextView desc = convertView.findViewById(R.id.carDesc);
+        TextView type = convertView.findViewById(R.id.carType);
 
         Car car = carList.get(position);
 
         modelText.setText(car.model);
         priceText.setText(car.price);
+        year.setText(car.year);
+        desc.setText(car.description);
+        type.setText(car.carType);
 
         if (car.image != null) {
             carImage.setImageBitmap(car.image);

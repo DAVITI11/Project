@@ -81,10 +81,10 @@ public class Fragment_Sell extends Fragment {
 
         SubmitBtn.setOnClickListener(v -> {
             String carType = spinner.getSelectedItem().toString();
-            String model = Model.getText().toString();
-            String year = Year.getText().toString();
-            String price = Price.getText().toString();
-            String desc = Description.getText().toString();
+            String model = Model.getText().toString().trim();
+            String year = Year.getText().toString().trim();
+            String price = Price.getText().toString().trim();
+            String desc = Description.getText().toString().trim();
 
             if (carType.equals("Select Car Type") ||
                     model.isEmpty() ||
@@ -101,16 +101,15 @@ public class Fragment_Sell extends Fragment {
 
             String base64Image = convertImageToBase64(selectedImageUri);
 
-            if (base64Image.isEmpty()) {
-                Toast.makeText(requireContext(), "Image error!", Toast.LENGTH_SHORT).show();
+            if (base64Image == null) {
+                Toast.makeText(requireContext(), "Failed to process image!", Toast.LENGTH_SHORT).show();
                 return;
             }
 
-            ((MainActivity) getActivity()).AddCarInfo(
-                    carType, model, year, price, desc, base64Image
-            );
+            ((MainActivity) getActivity()).AddCarInfo(carType, model, year, price, desc, base64Image);
 
             Toast.makeText(requireContext(), "Car Added!", Toast.LENGTH_SHORT).show();
+
         });
     }
 
