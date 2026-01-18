@@ -28,7 +28,7 @@ public class OwnerFrmg extends Fragment {
         GoBack = view.findViewById(R.id.GoBack);
 
         btnCht.setOnClickListener(v->{
-            ((MainActivity)getActivity()).ChangeFragment(new ChatFrgm());
+            ((MainActivity)getActivity()).ChangeFragment(new SelectUsers());
         });
         GoBack.setOnClickListener(v->{
             new MaterialAlertDialogBuilder(requireContext())

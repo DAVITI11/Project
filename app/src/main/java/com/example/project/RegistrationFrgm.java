@@ -58,7 +58,7 @@ public class RegistrationFrgm extends Fragment {
             password = Pass.getText().toString();
             if(!userName.isEmpty() && !password.isEmpty() && !firstNm.isEmpty() && !lasNm.isEmpty() && !email.isEmpty() && !address.isEmpty()){
                 ((MainActivity)getActivity()).addUserToServer(userName, password);
-                ((MainActivity)getActivity()).AddUserInfo(firstNm, lasNm, email, address);
+                ((MainActivity)getActivity()).AddUserInfo(firstNm, lasNm, email, address, userName);
                 Toast.makeText(requireContext(), "Registration Successful", Toast.LENGTH_SHORT).show();
             }else{
                 Toast.makeText(requireContext(), "Enter All Fields", Toast.LENGTH_SHORT).show();

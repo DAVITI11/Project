@@ -1,17 +1,11 @@
 package com.example.project;
 
-import static android.app.PendingIntent.getActivity;
-
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Base64;
 import android.util.Log;
-import android.widget.FrameLayout;
-import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,7 +16,6 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -30,8 +23,10 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
 
     ArrayList<Pair<String,String>> NamePass = new ArrayList<>();
+    String pas;
     Handler handler = new Handler();
     Runnable refreshRunnable;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -135,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }).start();
     }
-    public void AddUserInfo(String firstname, String lastname, String email, String address){
+    public void AddUserInfo(String firstname, String lastname, String email, String address,String username){
         new Thread(() -> {
             try {
                 URL url = new URL("http:10.96.161.72:8080/add_userinfo");
@@ -145,7 +140,7 @@ public class MainActivity extends AppCompatActivity {
                 conn.setDoOutput(true);
                 conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
 
-                String data = "firstname=" + firstname + "&lastname=" + lastname + "&email=" + email + "&address=" + address;
+                String data = "firstname=" + firstname + "&lastname=" + lastname + "&email=" + email + "&address=" + address + "&username=" + username;
 
                 conn.getOutputStream().write(data.getBytes());
 
@@ -191,7 +186,6 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void getCarInfo(CarCallback callback) {
-
         new Thread(() -> {
             ArrayList<Car> tempList = new ArrayList<>();
 
@@ -264,10 +258,15 @@ public class MainActivity extends AppCompatActivity {
         for (Pair<String, String> p : NamePass) {
             Log.d("check", p.first + " " + p.second);
             if (p.first.equals(name) && p.second.equals(pass)) {
+                pas = pass;
+                Log.d("check", "true");
                 return true;
             }
         }
         return false;
+    }
+    public String getPas(){
+        return pas;
     }
 
 }

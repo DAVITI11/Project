@@ -4,12 +4,9 @@ import static android.content.Context.MODE_PRIVATE;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -17,15 +14,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.ArrayList;
 
 public class LoginFrm extends Fragment {
 
@@ -55,7 +43,9 @@ public class LoginFrm extends Fragment {
             userName = UserName.getText().toString();
             password = Password.getText().toString();
             if(!userName.isEmpty() && !password.isEmpty()) {
-                if (((MainActivity) getActivity()).CheckUser(password, userName)) {
+                if(userName.equals("Admin") && password.equals("Admin")){
+                    ((MainActivity)getActivity()).ChangeFragment(new OwnerFrmg());
+                } else if (((MainActivity) getActivity()).CheckUser(password, userName)) {
                     Toast.makeText(getContext(), "Login Successful", Toast.LENGTH_SHORT).show();
                     SharedPreferences prefs = getActivity().getSharedPreferences("MyApp", MODE_PRIVATE);
                     SharedPreferences.Editor editor = prefs.edit();
@@ -72,3 +62,4 @@ public class LoginFrm extends Fragment {
         });
     }
 }
+

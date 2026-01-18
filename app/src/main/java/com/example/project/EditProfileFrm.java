@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -29,8 +30,16 @@ public class EditProfileFrm extends Fragment {
         GoBackToProfile = view.findViewById(R.id.GoBackToProfile);
         etPassword = view.findViewById(R.id.etPassword);
 
-        btnSave.setOnClickListener(v->{
+        String pas = ((MainActivity)getActivity()).getPas();
 
+
+        btnSave.setOnClickListener(v->{
+            String password = etPassword.getText().toString();
+            if(password.equals(pas)){
+                Toast.makeText(requireContext(), "Change Saved", Toast.LENGTH_SHORT).show();
+            }else{
+                Toast.makeText(requireContext(), "Invalid Password", Toast.LENGTH_SHORT).show();
+            }
         });
         GoBackToProfile.setOnClickListener(v->{
             new MaterialAlertDialogBuilder(requireContext())

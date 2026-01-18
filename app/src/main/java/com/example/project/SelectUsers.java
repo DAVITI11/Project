@@ -30,19 +30,13 @@ public class SelectUsers extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        listV = view.findViewById(R.id.list);
+        listV = view.findViewById(R.id.listV);
         lst = new ArrayList<>();
 
-        // Get all username + password pairs from MainActivity
-//        ArrayList<Pair<String,String>> infoList =
-//                ((MainActivity)getActivity()).GetAllInfo();
-//
-//        // Convert pairs into readable strings
-//        for (Pair<String, String> p : infoList) {
-//            lst.add(p.first + " ----> " + p.second);
-//        }
-//
-//        adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, lst);
-//        listV.setAdapter(adapter);
+        for (Pair<String, String> p : ((MainActivity) getActivity()).NamePass)
+            lst.add("name: " + p.second + "\npassword: " +p.first);
+        adapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_list_item_1, lst);
+        listV.setAdapter(adapter);
+
     }
 }
