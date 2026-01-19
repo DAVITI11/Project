@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:textSize="25sp"
             android:textColor="#000"
-            android:text="Model: " />
+            />
 
         <TextView
             android:id="@+id/carType"
@@ -31,7 +31,7 @@
             android:layout_height="wrap_content"
             android:textSize="25sp"
             android:textColor="#555"
-            android:text="Type: " />
+            />
 
         <TextView
             android:id="@+id/carYear"
@@ -39,7 +39,7 @@
             android:layout_height="wrap_content"
             android:textSize="25sp"
             android:textColor="#555"
-            android:text="Year: " />
+            />
 
         <TextView
             android:id="@+id/carPrice"
@@ -47,7 +47,7 @@
             android:layout_height="wrap_content"
             android:textSize="25sp"
             android:textColor="#555"
-            android:text="Price: " />
+            />
 
         <TextView
             android:id="@+id/carDesc"
@@ -56,7 +56,7 @@
             android:textColor="#777"
             android:textSize="25sp"
             android:maxLines="2"
-            android:text="Description: "/>
+            />
 
     </LinearLayout>
 

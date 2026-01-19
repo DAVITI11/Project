@@ -26,10 +26,11 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    ArrayList<Pair<String,String>> NamePass = new ArrayList<>();
-    String pas,usNm;
+    ArrayList<Pair<String, String>> NamePass = new ArrayList<>();
+    String pas, usNm;
     Handler handler = new Handler();
     Runnable refreshRunnable;
+    UserInfo userInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
 
             try {
                 JSONArray arr = new JSONArray(json);
-                ArrayList<Pair<String,String>> tempList = new ArrayList<>();
+                ArrayList<Pair<String, String>> tempList = new ArrayList<>();
 
                 for (int i = 0; i < arr.length(); i++) {
                     JSONObject obj = arr.getJSONObject(i);
@@ -111,30 +112,30 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void addUserToServer(String name, String password) {
-            new Thread(() -> {
-                try {
-                    URL url = new URL("http://10.96.161.72:8080/add_user");
-                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        new Thread(() -> {
+            try {
+                URL url = new URL("http://10.96.161.72:8080/add_user");
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
-                    conn.setRequestMethod("POST");
-                    conn.setDoOutput(true);
-                    conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+                conn.setRequestMethod("POST");
+                conn.setDoOutput(true);
+                conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
 
-                    String data = "name=" + name + "&password=" + password;
+                String data = "name=" + name + "&password=" + password;
 
-                    conn.getOutputStream().write(data.getBytes(StandardCharsets.UTF_8));
+                conn.getOutputStream().write(data.getBytes(StandardCharsets.UTF_8));
 
-                    int response = conn.getResponseCode();
-                    Log.d("SERVER", "Response code: " + response);
+                int response = conn.getResponseCode();
+                Log.d("SERVER", "Response code: " + response);
 
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }).start();
-            startAutoRefresh();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }).start();
+        startAutoRefresh();
     }
 
-    public void AddUserInfo(String firstname, String lastname, String email, String address,String username){
+    public void AddUserInfo(String firstname, String lastname, String email, String address, String username) {
         new Thread(() -> {
             try {
                 URL url = new URL("http://10.96.161.72:8080/add_userinfo");
@@ -175,19 +176,18 @@ public class MainActivity extends AppCompatActivity {
                 conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
 
                 String data =
-                        "car_type=" + URLEncoder.encode(carType, "UTF-8") +
-                                "&model=" + URLEncoder.encode(model, "UTF-8") +
-                                "&year=" + URLEncoder.encode(year, "UTF-8") +
-                                "&price=" + URLEncoder.encode(price, "UTF-8") +
-                                "&description=" + URLEncoder.encode(description, "UTF-8") +
-                                "&image=" + URLEncoder.encode(imagePath, "UTF-8") +
-                                "&owner=" + URLEncoder.encode(usNm, "UTF-8");
-
+                        "car_type=" + carType +
+                                "&model=" + model +
+                                "&year=" + year +
+                                "&price=" +  price +
+                                "&description=" + description +
+                                "&image=" + imagePath +
+                                "&owner=" + usNm;
 
                 conn.getOutputStream().write(data.getBytes(StandardCharsets.UTF_8));
 
                 int response = conn.getResponseCode();
-                Log.d("SERVER", "Car Added Response: " + response);
+                Log.d("SERVER", "Response code: " + response);
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -273,19 +273,56 @@ public class MainActivity extends AppCompatActivity {
         }
         return false;
     }
-    public boolean CheckName(String name){
-        for(Pair<String,String>p:NamePass){
-            if(p.first.equals(name)){
+
+    public boolean CheckName(String name) {
+        for (Pair<String, String> p : NamePass) {
+            if (p.first.equals(name)) {
                 return true;
             }
         }
         return false;
     }
 
-    public String getPas(){
+    public String getPas() {
         return pas;
     }
-    public String getUsNm(){
+
+    public String getUsNm() {
         return usNm;
     }
+
+    public void GetUserInfo(UserInfoCallback callback) {
+        new Thread(() -> {
+            try {
+                String url = "http://10.96.161.72:8080/get_usersinfo?username=" + usNm;
+
+                String json = httpGet(url);
+                JSONArray arr = new JSONArray(json);
+
+                UserInfo foundInfo = null;
+
+                for (int i = 0; i < arr.length(); i++) {
+                    JSONObject obj = arr.getJSONObject(i);
+
+                    foundInfo = new UserInfo(
+                            obj.getString("firstname"),
+                            obj.getString("lastname"),
+                            obj.getString("email"),
+                            obj.getString("address"),
+                            obj.getString("phone")
+                    );
+                }
+
+                UserInfo finalInfo = foundInfo;
+                handler.post(() -> callback.onResult(finalInfo));
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                handler.post(() -> callback.onResult(null));
+            }
+        }).start();
+    }
+
 }
+
+
