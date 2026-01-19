@@ -3,6 +3,7 @@ package com.example.project;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -202,7 +203,6 @@ public class MainActivity extends AppCompatActivity {
             try {
                 URL url = new URL("http://10.96.161.72:8080/get_carinfo");
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-
                 conn.setRequestMethod("GET");
 
                 BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
@@ -223,26 +223,10 @@ public class MainActivity extends AppCompatActivity {
                     String year = obj.getString("year");
                     String price = obj.getString("price");
                     String desc = obj.getString("description");
-
-                    Bitmap bitmap = null;
-                    if (!obj.isNull("image")) {
-                        String base64Image = obj.optString("image", "");
-                        if (!base64Image.isEmpty()) {
-                            if (base64Image.contains(",")) {
-                                base64Image = base64Image.split(",")[1];
-                            }
-                            try {
-                                byte[] bytes = android.util.Base64.decode(base64Image, android.util.Base64.DEFAULT);
-                                bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                                bitmap = null;
-                            }
-                        }
-                    }
+                    String imagePath = obj.getString("image");
                     String owner = obj.getString("owner");
 
-                    tempList.add(new Car(carType, model, year, price, desc, bitmap,owner));
+                    tempList.add(new Car(carType, model, year, price, desc, imagePath, owner));
                 }
 
                 runOnUiThread(() -> callback.onCarListLoaded(tempList));
@@ -253,6 +237,7 @@ public class MainActivity extends AppCompatActivity {
 
         }).start();
     }
+
 
     private void startAutoRefresh() {
         refreshRunnable = () -> {
@@ -293,36 +278,45 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void GetUserInfo(UserInfoCallback callback) {
+
         new Thread(() -> {
+
             try {
-                String url = "http://10.96.161.72:8080/get_usersinfo?username=" + usNm;
+                String usernameEncoded = null;
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    usernameEncoded = URLEncoder.encode(usNm, StandardCharsets.UTF_8);
+                }
+                String url = "http://10.96.161.72:8080/get_usersinfo?username=" + usernameEncoded;
 
                 String json = httpGet(url);
+
                 JSONArray arr = new JSONArray(json);
 
-                UserInfo foundInfo = null;
-
-                for (int i = 0; i < arr.length(); i++) {
-                    JSONObject obj = arr.getJSONObject(i);
-
-                    foundInfo = new UserInfo(
-                            obj.getString("firstname"),
-                            obj.getString("lastname"),
-                            obj.getString("email"),
-                            obj.getString("address"),
-                            obj.getString("phone")
-                    );
+                if (arr.length() == 0) {
+                    handler.post(() -> callback.onResult(null));
+                    return;
                 }
 
-                UserInfo finalInfo = foundInfo;
-                handler.post(() -> callback.onResult(finalInfo));
+                JSONObject obj = arr.getJSONObject(0);
+
+                UserInfo info = new UserInfo(
+                        obj.optString("firstname", ""),
+                        obj.optString("lastname", ""),
+                        obj.optString("email", ""),
+                        obj.optString("address", ""),
+                        obj.optString("phone", "")
+                );
+
+                handler.post(() -> callback.onResult(info));
 
             } catch (Exception e) {
                 e.printStackTrace();
                 handler.post(() -> callback.onResult(null));
             }
+
         }).start();
     }
+
     public void sendMessage(String sender, String receiver, String message) {
 
         new Thread(() -> {
@@ -336,11 +330,15 @@ public class MainActivity extends AppCompatActivity {
                 conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
 
                 String data =
-                        "sender=" + URLEncoder.encode(sender, "UTF-8") +
-                                "&receiver=" + URLEncoder.encode(receiver, "UTF-8") +
-                                "&message=" + URLEncoder.encode(message, "UTF-8") +
-                                "&timestamp=" + System.currentTimeMillis();
+                        null;
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    data = "sender=" + URLEncoder.encode(sender, StandardCharsets.UTF_8) +
+                            "&receiver=" + URLEncoder.encode(receiver, StandardCharsets.UTF_8) +
+                            "&message=" + URLEncoder.encode(message, StandardCharsets.UTF_8) +
+                            "&timestamp=" + System.currentTimeMillis();
+                }
 
+                assert data != null;
                 conn.getOutputStream().write(data.getBytes(StandardCharsets.UTF_8));
 
                 conn.getInputStream(); // force request execution
@@ -395,8 +393,4 @@ public class MainActivity extends AppCompatActivity {
     public interface ChatCallback {
         void onMessagesLoaded(ArrayList<Message> list);
     }
-
-
 }
-
-

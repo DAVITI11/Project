@@ -30,16 +30,19 @@ import java.io.InputStream;
 
 public class Fragment_Sell extends Fragment {
 
-    Button SubmitBtn;
-    ImageView AddPhoto;
-    TextInputEditText Model, Year, Price, Description;
+    private Button SubmitBtn;
+    private ImageView AddPhoto;
+    private TextInputEditText Model, Year, Price, Description;
+    private Spinner spinner;
 
     private static final int REQUEST_PERMISSION = 100;
     private Uri selectedImageUri = null;
 
-    ActivityResultLauncher<Intent> galleryLauncher =
+    private final ActivityResultLauncher<Intent> galleryLauncher =
             registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+
                 if (result.getResultCode() == Activity.RESULT_OK && result.getData() != null) {
+
                     selectedImageUri = result.getData().getData();
                     AddPhoto.setImageURI(selectedImageUri);
                 }
@@ -47,12 +50,15 @@ public class Fragment_Sell extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_sell, container, false);
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view,
+                              @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         AddPhoto = view.findViewById(R.id.carImage);
@@ -61,9 +67,14 @@ public class Fragment_Sell extends Fragment {
         Year = view.findViewById(R.id.Year);
         Price = view.findViewById(R.id.Price);
         Description = view.findViewById(R.id.Description);
+        spinner = view.findViewById(R.id.spinnerCars);
 
-        Spinner spinner = view.findViewById(R.id.spinnerCars);
+        setupSpinner();
+        AddPhoto.setOnClickListener(v -> checkPermission());
+        SubmitBtn.setOnClickListener(v -> submitCar());
+    }
 
+    private void setupSpinner() {
         String[] carsTp = {
                 "Select Car Type", "Sedan", "SUV", "Coupe", "Pickup", "Sport", "Van"
         };
@@ -77,52 +88,51 @@ public class Fragment_Sell extends Fragment {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
         spinner.setSelection(0);
-
-        AddPhoto.setOnClickListener(v -> checkPermission());
-
-        SubmitBtn.setOnClickListener(v -> {
-            String carType = spinner.getSelectedItem().toString();
-            String model = Model.getText().toString().trim();
-            String year = Year.getText().toString().trim();
-            String price = Price.getText().toString().trim();
-            String desc = Description.getText().toString().trim();
-
-            if (carType.equals("Select Car Type") ||
-                    model.isEmpty() ||
-                    year.isEmpty() ||
-                    price.isEmpty() ||
-                    desc.isEmpty() ||
-                    selectedImageUri == null) {
-
-                Toast.makeText(requireContext(),
-                        "Please fill all fields and select an image",
-                        Toast.LENGTH_SHORT).show();
-                return;
-            }
-
-            String savedPath = saveImageToInternalStorage(selectedImageUri);
-
-            if (savedPath == null) {
-                Toast.makeText(requireContext(), "Error saving image!", Toast.LENGTH_SHORT).show();
-                return;
-            }
-
-            ((MainActivity) getActivity()).AddCarInfo(
-                    carType, model, year, price, desc, savedPath
-            );
-            AddPhoto.clearColorFilter();
-            spinner.setSelection(0);
-            Model.setText("Model");
-            Year.setText("Year");
-            Price.setText("Price");
-            Description.setText("Description");
-            Toast.makeText(requireContext(), "Car Added!", Toast.LENGTH_SHORT).show();
-        });
     }
 
+    private void submitCar() {
+
+        String carType = spinner.getSelectedItem().toString();
+        String model = Model.getText().toString().trim();
+        String year = Year.getText().toString().trim();
+        String price = Price.getText().toString().trim();
+        String desc = Description.getText().toString().trim();
+
+        if (carType.equals("Select Car Type") ||
+                model.isEmpty() ||
+                year.isEmpty() ||
+                price.isEmpty() ||
+                desc.isEmpty() ||
+                selectedImageUri == null) {
+
+            Toast.makeText(requireContext(),
+                    "Please fill all fields and select an image",
+                    Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        String savedPath = saveImageToInternalStorage(selectedImageUri);
+
+        if (savedPath == null) {
+            Toast.makeText(requireContext(),
+                    "Error saving image!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        ((MainActivity) requireActivity()).AddCarInfo(
+                carType, model, year, price, desc, savedPath
+        );
+
+        clearForm();
+
+        Toast.makeText(requireContext(),
+                "Car Added!", Toast.LENGTH_SHORT).show();
+    }
     private String saveImageToInternalStorage(Uri uri) {
         try {
-            InputStream inputStream = requireContext().getContentResolver().openInputStream(uri);
+            InputStream inputStream = requireContext()
+                    .getContentResolver()
+                    .openInputStream(uri);
 
             String fileName = "car_" + System.currentTimeMillis() + ".jpg";
             File file = new File(requireContext().getFilesDir(), fileName);
@@ -139,29 +149,53 @@ public class Fragment_Sell extends Fragment {
             fos.close();
             inputStream.close();
 
-            return file.getAbsolutePath();  // path saved in database
-        }
-        catch (Exception e) {
+            return file.getAbsolutePath();
+
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
     }
 
+    private void clearForm() {
+        AddPhoto.setImageResource(R.drawable.ic_add_photo);
+        spinner.setSelection(0);
+        Model.setText("");
+        Year.setText("");
+        Price.setText("");
+        Description.setText("");
+        selectedImageUri = null;
+    }
+
     private void checkPermission() {
+
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
-            if (ContextCompat.checkSelfPermission(
-                    requireContext(),
-                    Manifest.permission.READ_MEDIA_IMAGES) != PackageManager.PERMISSION_GRANTED) {
 
-                requestPermissions(new String[]{Manifest.permission.READ_MEDIA_IMAGES}, REQUEST_PERMISSION);
-            } else openGallery();
+            if (ContextCompat.checkSelfPermission(requireContext(),
+                    Manifest.permission.READ_MEDIA_IMAGES)
+                    != PackageManager.PERMISSION_GRANTED) {
+
+                requestPermissions(
+                        new String[]{Manifest.permission.READ_MEDIA_IMAGES},
+                        REQUEST_PERMISSION
+                );
+            } else {
+                openGallery();
+            }
+
         } else {
-            if (ContextCompat.checkSelfPermission(
-                    requireContext(),
-                    Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
 
-                requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_PERMISSION);
-            } else openGallery();
+            if (ContextCompat.checkSelfPermission(requireContext(),
+                    Manifest.permission.READ_EXTERNAL_STORAGE)
+                    != PackageManager.PERMISSION_GRANTED) {
+
+                requestPermissions(
+                        new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                        REQUEST_PERMISSION
+                );
+            } else {
+                openGallery();
+            }
         }
     }
 
@@ -176,7 +210,9 @@ public class Fragment_Sell extends Fragment {
 
             openGallery();
         } else {
-            Toast.makeText(getContext(), "Permission denied", Toast.LENGTH_SHORT).show();
+            Toast.makeText(requireContext(),
+                    "Permission denied",
+                    Toast.LENGTH_SHORT).show();
         }
     }
 

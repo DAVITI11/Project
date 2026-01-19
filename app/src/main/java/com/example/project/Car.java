@@ -8,10 +8,10 @@ public class Car {
     public String year;
     public String price;
     public String description;
-    public Bitmap image;
+    public String image;
     public String owner;
 
-    public Car(String carType, String model, String year, String price, String description, Bitmap image,String owner) {
+    public Car(String carType, String model, String year, String price, String description, String image,String owner) {
         this.carType = "Car Type: " + carType;
         this.model = "Car Model: " + model;
         this.year = "Year: " + year;

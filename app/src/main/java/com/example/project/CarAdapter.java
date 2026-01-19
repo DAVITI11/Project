@@ -2,6 +2,7 @@ package com.example.project;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import com.example.project.R;
 
 import org.w3c.dom.Text;
 
+import java.io.File;
 import java.util.ArrayList;
 public class CarAdapter extends BaseAdapter {
 
@@ -92,14 +94,18 @@ public class CarAdapter extends BaseAdapter {
         holder.typeText.setText(car.carType);
         holder.ownerText.setText(car.owner);
 
-        if (car.image != null) {
-            holder.carImage.setImageBitmap(car.image);
+        // Load image from file path
+        File imgFile = new File(car.image);
+
+        if (imgFile.exists()) {
+            holder.carImage.setImageURI(Uri.fromFile(imgFile));
         } else {
-         //   holder.carImage.setImageResource(R.drawable.car_placeholder);
+            holder.carImage.setImageResource(R.drawable.ic_add_photo);
         }
 
         return convertView;
     }
+
 
     private static class ViewHolder {
         ImageView carImage;

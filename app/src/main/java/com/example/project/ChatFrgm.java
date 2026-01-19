@@ -95,13 +95,12 @@ public class ChatFrgm extends Fragment {
             return true;
         });
 
-        // GO BACK
         GoBack.setOnClickListener(v -> {
             new MaterialAlertDialogBuilder(requireContext())
                     .setTitle("Exit Chat")
                     .setMessage("Are you sure you want to exit chat?")
                     .setPositiveButton("Yes", (dialog, which) ->
-                            act.ChangeFragment(new OwnerFrmg())
+                            act.ChangeFragment(new ClientFrmg())
                     )
                     .setNegativeButton("No", null)
                     .show();
