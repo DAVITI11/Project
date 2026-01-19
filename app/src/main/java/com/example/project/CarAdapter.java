@@ -15,63 +15,99 @@ import com.example.project.R;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
-
 public class CarAdapter extends BaseAdapter {
 
-    Context context;
-    ArrayList<Car> carList;
+    private Context context;
+    private ArrayList<Car> originalList;   // full list
+    private ArrayList<Car> filteredList;   // filtered list
+    private LayoutInflater inflater;
 
     public CarAdapter(Context context, ArrayList<Car> carList) {
         this.context = context;
-        this.carList = carList;
+        this.originalList = carList;
+        this.filteredList = new ArrayList<>(carList);
+        this.inflater = LayoutInflater.from(context);
     }
 
     @Override
     public int getCount() {
-        return carList.size();
+        return filteredList.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return carList.get(position);
+        return filteredList.get(position);
     }
 
     @Override
     public long getItemId(int position) {
         return position;
     }
-    public String getOwner(int position){
-        return carList.get(position).owner;
+
+    public void filterByTp(String tp) {
+        filteredList.clear();
+
+        if(tp.equals("!")) {
+            filteredList.addAll(originalList); // show all
+        } else {
+            for(Car c : originalList) {
+                if(c.carType.substring(10).equals(tp)) {
+                    filteredList.add(c);
+                }
+            }
+        }
+
+        notifyDataSetChanged();
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
+        ViewHolder holder;
+
         if (convertView == null) {
-            convertView = LayoutInflater.from(context).inflate(R.layout.car_item, parent, false);
+            convertView = inflater.inflate(R.layout.car_item, parent, false);
+
+            holder = new ViewHolder();
+            holder.carImage = convertView.findViewById(R.id.carImage);
+            holder.modelText = convertView.findViewById(R.id.carModel);
+            holder.priceText = convertView.findViewById(R.id.carPrice);
+            holder.yearText = convertView.findViewById(R.id.carYear);
+            holder.descText = convertView.findViewById(R.id.carDesc);
+            holder.typeText = convertView.findViewById(R.id.carType);
+            holder.ownerText = convertView.findViewById(R.id.owner);
+
+            convertView.setTag(holder);
+
+        } else {
+            holder = (ViewHolder) convertView.getTag();
         }
 
-        ImageView carImage = convertView.findViewById(R.id.carImage);
-        TextView modelText = convertView.findViewById(R.id.carModel);
-        TextView priceText = convertView.findViewById(R.id.carPrice);
-        TextView year = convertView.findViewById(R.id.carYear);
-        TextView desc = convertView.findViewById(R.id.carDesc);
-        TextView type = convertView.findViewById(R.id.carType);
-        TextView owner = convertView.findViewById(R.id.owner);
+        Car car = filteredList.get(position);
 
-        Car car = carList.get(position);
-
-        modelText.setText(car.model);
-        priceText.setText(car.price);
-        year.setText(car.year);
-        desc.setText(car.description);
-        type.setText(car.carType);
-        owner.setText(car.owner);
+        holder.modelText.setText(car.model);
+        holder.priceText.setText(car.price);
+        holder.yearText.setText(car.year);
+        holder.descText.setText(car.description);
+        holder.typeText.setText(car.carType);
+        holder.ownerText.setText(car.owner);
 
         if (car.image != null) {
-            carImage.setImageBitmap(car.image);
+            holder.carImage.setImageBitmap(car.image);
+        } else {
+         //   holder.carImage.setImageResource(R.drawable.car_placeholder);
         }
 
         return convertView;
+    }
+
+    private static class ViewHolder {
+        ImageView carImage;
+        TextView modelText;
+        TextView priceText;
+        TextView yearText;
+        TextView descText;
+        TextView typeText;
+        TextView ownerText;
     }
 }

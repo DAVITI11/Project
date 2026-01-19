@@ -7,6 +7,9 @@
 
             <LinearLayout android:id="@+id/categoryContainer" android:layout_width="wrap_content" android:layout_height="wrap_content" android:orientation="horizontal" android:padding="10dp">
 
+
+                <TextView android:id="@+id/AllId" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="All" android:textSize="18sp" android:padding="12dp" android:layout_marginEnd="20dp"/>
+
                 <TextView android:id="@+id/SedanId" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Sedan" android:textSize="18sp" android:padding="12dp" android:layout_marginEnd="20dp"/>
 
                 <TextView android:id="@+id/SUVId" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="SUV" android:textSize="18sp" android:padding="12dp" android:layout_marginEnd="20dp"/>
