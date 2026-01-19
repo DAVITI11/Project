@@ -110,6 +110,7 @@ public class Fragment_Sell extends Fragment {
             ((MainActivity) getActivity()).AddCarInfo(
                     carType, model, year, price, desc, savedPath
             );
+            AddPhoto.clearColorFilter();
             spinner.setSelection(0);
             Model.setText("Model");
             Year.setText("Year");

@@ -240,8 +240,9 @@ public class MainActivity extends AppCompatActivity {
                             }
                         }
                     }
+                    String owner = obj.getString("owner");
 
-                    tempList.add(new Car(carType, model, year, price, desc, bitmap));
+                    tempList.add(new Car(carType, model, year, price, desc, bitmap,owner));
                 }
 
                 runOnUiThread(() -> callback.onCarListLoaded(tempList));
@@ -322,6 +323,79 @@ public class MainActivity extends AppCompatActivity {
             }
         }).start();
     }
+    public void sendMessage(String sender, String receiver, String message) {
+
+        new Thread(() -> {
+            try {
+
+                URL url = new URL("http://10.96.161.72:8080/send_message");
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+
+                conn.setRequestMethod("POST");
+                conn.setDoOutput(true);
+                conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+
+                String data =
+                        "sender=" + URLEncoder.encode(sender, "UTF-8") +
+                                "&receiver=" + URLEncoder.encode(receiver, "UTF-8") +
+                                "&message=" + URLEncoder.encode(message, "UTF-8") +
+                                "&timestamp=" + System.currentTimeMillis();
+
+                conn.getOutputStream().write(data.getBytes(StandardCharsets.UTF_8));
+
+                conn.getInputStream(); // force request execution
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }).start();
+    }
+
+
+    public void getMessages(ChatCallback callback) {
+
+        new Thread(() -> {
+
+            ArrayList<Message> list = new ArrayList<>();
+
+            try {
+                URL url = new URL("http://10.96.161.72:8080/get_messages?user=" + URLEncoder.encode(usNm, "UTF-8"));
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestMethod("GET");
+
+                BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                StringBuilder jsonBuilder = new StringBuilder();
+
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    jsonBuilder.append(line);
+                }
+
+                JSONArray arr = new JSONArray(jsonBuilder.toString());
+
+                for (int i = 0; i < arr.length(); i++) {
+                    JSONObject obj = arr.getJSONObject(i);
+
+                    list.add(new Message(
+                            obj.getString("sender"),
+                            obj.getString("receiver"),
+                            obj.getString("message"),
+                            obj.getString("timestamp")
+                    ));
+                }
+
+                runOnUiThread(() -> callback.onMessagesLoaded(list));
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        }).start();
+    }
+    public interface ChatCallback {
+        void onMessagesLoaded(ArrayList<Message> list);
+    }
+
 
 }
 

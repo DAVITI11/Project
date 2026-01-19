@@ -1,5 +1,8 @@
 package com.example.project;
 
+import android.app.AlertDialog;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -62,5 +65,45 @@ public class Fragment_Home extends Fragment {
         }
         adapter.notifyDataSetChanged();
 
+        lstv.setOnItemLongClickListener((parent, view1, position, id) -> {
+
+            Car selectedCar = (Car) parent.getItemAtPosition(position);
+
+            showOptionsDialog(selectedCar);
+
+            return true;
+        });
+
+
     }
+    private void showOptionsDialog(Car item) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+
+        builder.setTitle("Select Action")
+                .setItems(new CharSequence[]{"Call", "Save", "Send Message"}, (dialog, which) -> {
+
+                    switch (which) {
+                        case 0:
+                            callNumber("555416550");
+                            break;
+
+                        case 1:
+                           // saveItem(item);
+                            break;
+
+                        case 2:
+                            ((MainActivity)getActivity()).ChangeFragment(new ChatFrgm());
+                            break;
+                    }
+                });
+
+        builder.show();
+    }
+    private void callNumber(String number) {
+        Intent intent = new Intent(Intent.ACTION_DIAL);
+        intent.setData(Uri.parse("tel:" + number));
+        startActivity(intent);
+    }
+
+
 }

@@ -40,6 +40,9 @@ public class CarAdapter extends BaseAdapter {
     public long getItemId(int position) {
         return position;
     }
+    public String getOwner(int position){
+        return carList.get(position).owner;
+    }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -54,6 +57,7 @@ public class CarAdapter extends BaseAdapter {
         TextView year = convertView.findViewById(R.id.carYear);
         TextView desc = convertView.findViewById(R.id.carDesc);
         TextView type = convertView.findViewById(R.id.carType);
+        TextView owner = convertView.findViewById(R.id.owner);
 
         Car car = carList.get(position);
 
@@ -62,6 +66,7 @@ public class CarAdapter extends BaseAdapter {
         year.setText(car.year);
         desc.setText(car.description);
         type.setText(car.carType);
+        owner.setText(car.owner);
 
         if (car.image != null) {
             carImage.setImageBitmap(car.image);
