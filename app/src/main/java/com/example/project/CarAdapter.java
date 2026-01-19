@@ -51,7 +51,7 @@ public class CarAdapter extends BaseAdapter {
         ImageView carImage = convertView.findViewById(R.id.carImage);
         TextView modelText = convertView.findViewById(R.id.carModel);
         TextView priceText = convertView.findViewById(R.id.carPrice);
-        TextView year = convertView.findViewById(R.id.Year);
+        TextView year = convertView.findViewById(R.id.carYear);
         TextView desc = convertView.findViewById(R.id.carDesc);
         TextView type = convertView.findViewById(R.id.carType);
 

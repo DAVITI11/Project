@@ -163,7 +163,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void AddCarInfo(String carType, String model, String year,
-                           String price, String description, String base64Image) {
+                           String price, String description, String imagePath) {
 
         new Thread(() -> {
             try {
@@ -175,13 +175,14 @@ public class MainActivity extends AppCompatActivity {
                 conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
 
                 String data =
-                        "car_type=" + URLEncoder.encode(carType, StandardCharsets.UTF_8.toString()) +
-                                "&model=" + URLEncoder.encode(model, StandardCharsets.UTF_8.toString()) +
-                                "&year=" + URLEncoder.encode(year, StandardCharsets.UTF_8.toString()) +
-                                "&price=" + URLEncoder.encode(price, StandardCharsets.UTF_8.toString()) +
-                                "&description=" + URLEncoder.encode(description, StandardCharsets.UTF_8.toString()) +
-                                "&image=" + URLEncoder.encode(base64Image, StandardCharsets.UTF_8.toString()) +
-                                "&owner=" + URLEncoder.encode(usNm, StandardCharsets.UTF_8.toString());
+                        "car_type=" + URLEncoder.encode(carType, "UTF-8") +
+                                "&model=" + URLEncoder.encode(model, "UTF-8") +
+                                "&year=" + URLEncoder.encode(year, "UTF-8") +
+                                "&price=" + URLEncoder.encode(price, "UTF-8") +
+                                "&description=" + URLEncoder.encode(description, "UTF-8") +
+                                "&image=" + URLEncoder.encode(imagePath, "UTF-8") +
+                                "&owner=" + URLEncoder.encode(usNm, "UTF-8");
+
 
                 conn.getOutputStream().write(data.getBytes(StandardCharsets.UTF_8));
 

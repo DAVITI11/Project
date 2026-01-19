@@ -6,14 +6,14 @@
 
     <ImageView
         android:id="@+id/carImage"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
         android:scaleType="centerCrop"
         android:src="@mipmap/ic_launcher"/>
 
     <LinearLayout
         android:orientation="vertical"
-        android:paddingLeft="10dp"
+        android:layout_marginStart="12dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
@@ -21,34 +21,42 @@
             android:id="@+id/carModel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="18sp"
-            android:textColor="#000"/>
+            android:textSize="25sp"
+            android:textColor="#000"
+            android:text="Model: " />
 
         <TextView
             android:id="@+id/carType"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:textColor="#555"/>
-
+            android:textSize="25sp"
+            android:textColor="#555"
+            android:text="Type: " />
 
         <TextView
             android:id="@+id/carYear"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:textColor="#555"/>
+            android:textSize="25sp"
+            android:textColor="#555"
+            android:text="Year: " />
 
         <TextView
             android:id="@+id/carPrice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:textColor="#555"/>
+            android:textSize="25sp"
+            android:textColor="#555"
+            android:text="Price: " />
+
         <TextView
             android:id="@+id/carDesc"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"></TextView>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#777"
+            android:textSize="25sp"
+            android:maxLines="2"
+            android:text="Description: "/>
 
     </LinearLayout>
 
