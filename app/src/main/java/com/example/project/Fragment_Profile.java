@@ -36,7 +36,6 @@ public class Fragment_Profile extends Fragment {
         profileName = view.findViewById(R.id.profileName);
         profileEmail = view.findViewById(R.id.profileEmail);
         valuePhone = view.findViewById(R.id.valuePhone);
-        valueAddress = view.findViewById(R.id.valueAddress);
 
         btnEditProfile = view.findViewById(R.id.btnEditProfile);
         btnLogout = view.findViewById(R.id.btnLogout);
@@ -49,8 +48,6 @@ public class Fragment_Profile extends Fragment {
                 profileEmail.setText(info.Email);
 
                 valuePhone.setText(info.Phone);
-
-                valueAddress.setText(info.Address);
 
             } else {
                 Toast.makeText(getActivity(), "Error loading user info", Toast.LENGTH_SHORT).show();

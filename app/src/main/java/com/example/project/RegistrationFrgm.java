@@ -17,8 +17,8 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 public class RegistrationFrgm extends Fragment {
     Button Reg,GotoLogin;
-    String userName, password, firstNm,lasNm,email, address;
-    EditText UserNm, Pass,FirstNm,LastNm, eml, adrs;
+    String userName, password, firstNm,lasNm,email, phone;
+    EditText UserNm, Pass,FirstNm,LastNm, eml, ph;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -34,7 +34,7 @@ public class RegistrationFrgm extends Fragment {
         FirstNm = view.findViewById(R.id.FirstName);
         LastNm = view.findViewById(R.id.LastName);
         eml = view.findViewById(R.id.email);
-        adrs = view.findViewById(R.id.address);
+        ph = view.findViewById(R.id.phone);
         Reg = view.findViewById(R.id.RegBtn);
         GotoLogin = view.findViewById(R.id.GotoLogin);
 
@@ -53,13 +53,13 @@ public class RegistrationFrgm extends Fragment {
             firstNm = FirstNm.getText().toString();
             lasNm = LastNm.getText().toString();
             email = eml.getText().toString();
-            address = adrs.getText().toString();
+            phone = ph.getText().toString();
             userName = UserNm.getText().toString();
             password = Pass.getText().toString();
-            if(!userName.isEmpty() && !password.isEmpty() && !firstNm.isEmpty() && !lasNm.isEmpty() && !email.isEmpty() && !address.isEmpty()){
+            if(!userName.isEmpty() && !password.isEmpty() && !firstNm.isEmpty() && !lasNm.isEmpty() && !email.isEmpty() && !phone.isEmpty()){
                 if(!((MainActivity)getActivity()).CheckName(userName)) {
                     ((MainActivity) getActivity()).addUserToServer(userName, password);
-                    ((MainActivity) getActivity()).AddUserInfo(firstNm, lasNm, email, address, userName);
+                    ((MainActivity) getActivity()).AddUserInfo(firstNm, lasNm, email, phone, userName);
                     Toast.makeText(requireContext(), "Registration Successful", Toast.LENGTH_SHORT).show();
                 }else{
                     Toast.makeText(requireContext(), "User Already Exists!!!", Toast.LENGTH_SHORT).show();

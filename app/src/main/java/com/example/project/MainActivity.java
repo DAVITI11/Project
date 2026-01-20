@@ -28,10 +28,9 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
 
     ArrayList<Pair<String, String>> NamePass = new ArrayList<>();
-    String pas, usNm;
+    String pas="", usNm="";
     Handler handler = new Handler();
     Runnable refreshRunnable;
-    UserInfo userInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -136,7 +135,7 @@ public class MainActivity extends AppCompatActivity {
         startAutoRefresh();
     }
 
-    public void AddUserInfo(String firstname, String lastname, String email, String address, String username) {
+    public void AddUserInfo(String firstname, String lastname, String email, String phone, String username) {
         new Thread(() -> {
             try {
                 URL url = new URL("http://10.96.161.72:8080/add_userinfo");
@@ -150,7 +149,7 @@ public class MainActivity extends AppCompatActivity {
                         "firstname=" + firstname +
                                 "&lastname=" + lastname +
                                 "&email=" + email +
-                                "&address=" + address +
+                                "&phone=" + phone +
                                 "&username=" + username;
 
                 conn.getOutputStream().write(data.getBytes(StandardCharsets.UTF_8));
@@ -282,11 +281,8 @@ public class MainActivity extends AppCompatActivity {
         new Thread(() -> {
 
             try {
-                String usernameEncoded = null;
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                    usernameEncoded = URLEncoder.encode(usNm, StandardCharsets.UTF_8);
-                }
-                String url = "http://10.96.161.72:8080/get_usersinfo?username=" + usernameEncoded;
+
+                String url = "http://10.96.161.72:8080/get_userinfo?username=" + usNm;
 
                 String json = httpGet(url);
 
@@ -303,8 +299,8 @@ public class MainActivity extends AppCompatActivity {
                         obj.optString("firstname", ""),
                         obj.optString("lastname", ""),
                         obj.optString("email", ""),
-                        obj.optString("address", ""),
-                        obj.optString("phone", "")
+                        obj.optString("phone", ""),
+                        obj.optString("username", "")
                 );
 
                 handler.post(() -> callback.onResult(info));
