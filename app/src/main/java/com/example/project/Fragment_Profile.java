@@ -19,7 +19,7 @@ import androidx.fragment.app.Fragment;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 public class Fragment_Profile extends Fragment {
-    TextView profileName, profileEmail, valuePhone,valueAddress;
+    TextView profileName, profileEmail, valuePhone;
     Button btnEditProfile, btnLogout;
     UserInfo userInfo;
     @Nullable

@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -24,6 +25,7 @@ public class ChatFrgm extends Fragment {
     Button GoBack;
     EditText EdTxt;
     ImageButton ImBt;
+    TextView hdtx;
 
     ArrayList<Message> lst;
     ChatAdpt adpt;
@@ -35,6 +37,7 @@ public class ChatFrgm extends Fragment {
 
     String currentUser;
     String chatWithUser;
+    String temp="";
 
     @Nullable
     @Override
@@ -53,6 +56,10 @@ public class ChatFrgm extends Fragment {
         EdTxt = view.findViewById(R.id.etMessage);
         ImBt = view.findViewById(R.id.btnSend);
         GoBack = view.findViewById(R.id.GoBack);
+        hdtx = view.findViewById(R.id.HeadTxt);
+
+        hdtx.setText(temp);
+
 
         lst = new ArrayList<com.example.project.Message>();
         adpt = new ChatAdpt(requireContext(), lst);
@@ -62,7 +69,6 @@ public class ChatFrgm extends Fragment {
             String text = EdTxt.getText().toString();
 
             if (!text.isEmpty()) {
-              //  lst.add(new Message(text, true));
                 adpt.notifyDataSetChanged();
                 lstv.setSelection(lst.size() - 1);
                 EdTxt.setText("");
@@ -70,14 +76,13 @@ public class ChatFrgm extends Fragment {
         });
 
 
-        // SEND MESSAGE
         ImBt.setOnClickListener(v -> {
-            String msg = EdTxt.getText().toString().trim();
-            if (!msg.isEmpty()) {
-                act.sendMessage(currentUser, chatWithUser, msg);
-                EdTxt.setText("");
-                loadMessages(); // refresh immediately
-            }
+//            String msg = EdTxt.getText().toString().trim();
+//            if (!msg.isEmpty()) {
+//                act.sendMessage(currentUser, chatWithUser, msg);
+//                EdTxt.setText("");
+//                loadMessages(); // refresh immediately
+//            }
         });
 
         lstv.setOnItemLongClickListener((parent, itemView, position, id) -> {
@@ -125,7 +130,7 @@ public class ChatFrgm extends Fragment {
             lst.clear();
             lst.addAll(list);
             adpt.notifyDataSetChanged();
-            lstv.setSelection(lst.size() - 1); // scroll bottom
+            lstv.setSelection(lst.size() - 1);
         });
     }
 
@@ -133,5 +138,8 @@ public class ChatFrgm extends Fragment {
     public void onPause() {
         super.onPause();
         handler.removeCallbacks(refreshTask);
+    }
+    public void Set_Temp(String temp){
+        this.temp=temp;
     }
 }

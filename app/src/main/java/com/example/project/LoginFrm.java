@@ -51,6 +51,14 @@ public class LoginFrm extends Fragment {
                     Toast.makeText(getContext(), "Login Successful", Toast.LENGTH_SHORT).show();
 //                    SharedPreferences prefs = getActivity().getSharedPreferences("MyApp", MODE_PRIVATE);
 //                    prefs.edit().putBoolean("isLoggedIn", true).putString("userName", userName).apply();
+                    SharedPreferences prefs =
+                            getActivity().getSharedPreferences("MyApp", MODE_PRIVATE);
+
+                    prefs.edit()
+                            .putString("userName", userName)
+                            .putBoolean("isLoggedIn", true)
+                            .apply();
+
                     ((MainActivity)getActivity()).ChangeFragment(new ClientFrmg());
                 }else{
                     Toast.makeText(getContext(), "Invalid Username or Password", Toast.LENGTH_SHORT).show();

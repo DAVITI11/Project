@@ -6,7 +6,7 @@
 
         <Space android:layout_width="20dp" android:layout_height="match_parent"></Space>
 
-        <TextView android:id="@+id/HeadTxt" android:layout_width="wrap_content" android:layout_height="50dp" android:text="dddddddddddddd"></TextView>
+        <TextView android:id="@+id/HeadTxt" android:layout_width="wrap_content" android:layout_height="50dp" android:text="#############" android:textSize="25dp"></TextView>
 
     </LinearLayout>
 

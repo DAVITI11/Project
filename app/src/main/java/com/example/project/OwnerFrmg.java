@@ -14,7 +14,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 public class OwnerFrmg extends Fragment {
 
-    Button btnCht,GoBack;
+    Button btnCht,GoBack,Mainpg;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -26,6 +26,7 @@ public class OwnerFrmg extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         btnCht = view.findViewById(R.id.btnCht);
         GoBack = view.findViewById(R.id.GoBack);
+        Mainpg = view.findViewById(R.id.Mainpg);
 
         btnCht.setOnClickListener(v->{
             ((MainActivity)getActivity()).ChangeFragment(new SelectUsers());
@@ -39,6 +40,9 @@ public class OwnerFrmg extends Fragment {
                     })
                     .setNegativeButton("No", null)
                     .show();
+        });
+        Mainpg.setOnClickListener(v->{
+            ((MainActivity)getActivity()).ChangeFragment(new Fragment_Home());
         });
     }
 }

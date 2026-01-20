@@ -20,8 +20,8 @@ import java.util.ArrayList;
 public class CarAdapter extends BaseAdapter {
 
     private Context context;
-    private ArrayList<Car> originalList;   // full list
-    private ArrayList<Car> filteredList;   // filtered list
+    private ArrayList<Car> originalList;
+    private ArrayList<Car> filteredList;
     private LayoutInflater inflater;
 
     public CarAdapter(Context context, ArrayList<Car> carList) {
@@ -50,7 +50,7 @@ public class CarAdapter extends BaseAdapter {
         filteredList.clear();
 
         if(tp.equals("!")) {
-            filteredList.addAll(originalList); // show all
+            filteredList.addAll(originalList);
         } else {
             for(Car c : originalList) {
                 if(c.carType.substring(10).equals(tp)) {
@@ -94,7 +94,6 @@ public class CarAdapter extends BaseAdapter {
         holder.typeText.setText(car.carType);
         holder.ownerText.setText(car.owner);
 
-        // Load image from file path
         File imgFile = new File(car.image);
 
         if (imgFile.exists()) {

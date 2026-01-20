@@ -1,7 +1,9 @@
 package com.example.project;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -15,6 +17,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.google.firebase.crashlytics.buildtools.reloc.com.google.common.reflect.TypeToken;
+import com.google.gson.Gson;
+
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 public class Fragment_Home extends Fragment {
@@ -95,7 +101,7 @@ public class Fragment_Home extends Fragment {
                             break;
 
                         case 1:
-                           // saveItem(item);
+                            saveCar(item);
                             break;
 
                         case 2:
@@ -106,6 +112,39 @@ public class Fragment_Home extends Fragment {
 
         builder.show();
     }
+    private void saveCar(Car car) {
+
+        SharedPreferences userPrefs =
+                requireActivity().getSharedPreferences("MyApp", Context.MODE_PRIVATE);
+
+        String username = userPrefs.getString("userName", null);
+        if (username == null) return;
+
+        SharedPreferences prefs =
+                requireActivity().getSharedPreferences("SavedCars", Context.MODE_PRIVATE);
+
+        Gson gson = new Gson();
+        String key = "saved_" + username;
+
+        String json = prefs.getString(key, "[]");
+
+        Type type = new TypeToken<ArrayList<Car>>() {}.getType();
+        ArrayList<Car> list = gson.fromJson(json, type);
+
+        for (Car c : list) {
+            if (c.model.equals(car.model) && c.owner.equals(car.owner)) {
+                return; // already saved
+            }
+        }
+
+        list.add(car);
+
+        prefs.edit()
+                .putString(key, gson.toJson(list))
+                .apply();
+    }
+
+
     private void callNumber(String number) {
         Intent intent = new Intent(Intent.ACTION_DIAL);
         intent.setData(Uri.parse("tel:" + number));
